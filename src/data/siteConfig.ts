@@ -22,6 +22,11 @@ export type FAQItem = {
   answer: string;
 };
 
+export type WhyUs = {
+  heading: string;
+  points: string[];
+};
+
 export type SiteConfig = {
   brand: {
     name: string;
@@ -35,9 +40,14 @@ export type SiteConfig = {
     primaryCta: CTA;
     secondaryCta: CTA;
   };
+  contact: {
+    heading: string;
+    subtext: string;
+  };
   services: Service[];
   process: string[];
   prices: PriceItem[];
+  whyUs: WhyUs;
   faq: FAQItem[];
 };
 
@@ -48,6 +58,7 @@ export const siteConfig: SiteConfig = {
     email: "post@trafikkskole.no",
     location: "Oslo",
   },
+
   hero: {
     headline: "Klar for førerkortet?",
     subtext:
@@ -61,86 +72,101 @@ export const siteConfig: SiteConfig = {
       href: "#kontakt",
     },
   },
+
+  contact: {
+    heading: "Kontakt oss",
+    subtext:
+      "Ta kontakt for å bestille kjøretimer eller kurs, eller hvis du har spørsmål.",
+  },
+
   services: [
     {
       title: "Kjøretimer",
       description:
-        "Fleksible kjøretimer tilpasset ditt nivå og dine behov.",
+        "Individuell opplæring tilpasset nivå og progresjon.",
       cta: {
         label: "Bestill kjøretime",
         href: "#kontakt",
       },
     },
     {
-      title: "Kurs",
+      title: "Obligatoriske kurs",
       description:
-        "Vi tilbyr alle obligatoriske kurs du trenger for førerkort klasse B.",
+        "Vi guider deg trygt gjennom alle kurs du må ha.",
       cta: {
         label: "Se kurs",
         href: "#kontakt",
       },
     },
     {
-      title: "Oppkjøring",
+      title: "Oppkjøringstrening",
       description:
-        "Vi forbereder deg grundig til oppkjøring slik at du møter trygg og forberedt.",
+        "Forberedelse som gir trygghet på den store dagen.",
       cta: {
         label: "Kontakt oss",
         href: "#kontakt",
       },
     },
   ],
+
   process: [
-    "Trafikalt grunnkurs",
-    "Kjøretimer og trinnvurdering",
-    "Obligatoriske kurs",
-    "Oppkjøring",
+    "Velg girtype (manuell eller automat)",
+    "Bestill time",
+    "Kjør",
   ],
-prices: [
-  {
-    title: "Kjøretime (45 min)",
-    price: "850 kr",
-  },
-  {
-    title: "Trafikalt grunnkurs",
-    price: "Fra 2 000 kr",
-  },
-  {
-    title: "Leie av bil til førerprøve",
-    price: "4 900 kr",
-  },
-  {
-    title: "Oppfriskningstime",
-    price: "800 kr",
-  },
-],
 
-faq: [
-  {
-    question: "Hvem må ta trafikalt grunnkurs?",
-    answer:
-      "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre. Er du usikker på hva som gjelder for deg, hjelper vi deg gjerne.",
-  },
-  {
-    question: "Hvilke kurs er obligatoriske for klasse B?",
-    answer:
-      "De fleste må gjennom trafikalt grunnkurs (hvis aktuelt), mørkekjøring, sikkerhetskurs på bane og sikkerhetskurs på vei. Vi hjelper deg med rekkefølge og plan.",
-  },
-  {
-    question: "Hvor lang tid tar det å ta førerkort?",
-    answer:
-      "Det varierer fra elev til elev. Vi lager en plan basert på nivå, erfaring og hvor ofte du kan øve.",
-  },
-  {
-    question: "Tilbyr dere kjøretimer på engelsk?",
-    answer:
-      "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk. Ta kontakt, så finner vi en løsning som passer.",
-  },
-  {
-    question: "Kan jeg leie bil til oppkjøring?",
-    answer:
-      "Ja, mange elever leier bil av oss til førerprøven. Vi anbefaler også forberedelse i forkant slik at du møter trygg og klar.",
-  },
-],
+  prices: [
+    {
+      title: "Kjøretime",
+      price: "Fra 850 kr",
+      description: "45 minutter med godkjent instruktør.",
+    },
+    {
+      title: "Obligatoriske kurs",
+      price: "Fra 2 000 kr",
+      description: "Pris varierer etter kurs og progresjon.",
+    },
+    {
+      title: "Pakker",
+      price: "Fra 8 000 kr",
+      description: "Samlet opplæring til en gunstigere pris.",
+    },
+  ],
 
+  whyUs: {
+    heading: "Hvorfor velge oss?",
+    points: [
+      "Godkjente og erfarne trafikklærere",
+      "Opplæring tilpasset ditt nivå og tempo",
+      "Fokus på trygg og effektiv progresjon",
+    ],
+  },
+
+  faq: [
+    {
+      question: "Hvem må ta trafikalt grunnkurs?",
+      answer:
+        "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre. Er du usikker på hva som gjelder for deg, hjelper vi deg gjerne.",
+    },
+    {
+      question: "Hvor lang tid tar det å ta førerkort?",
+      answer:
+        "Det varierer fra elev til elev. Vi lager en plan basert på nivå, erfaring og hvor ofte du kan øve.",
+    },
+    {
+      question: "Tilbyr dere kjøretimer på engelsk?",
+      answer:
+        "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
+    },
+    {
+      question: "Kan jeg leie bil til oppkjøring?",
+      answer:
+        "Ja, mange elever leier bil av oss til førerprøven.",
+    },
+    {
+      question: "Hvordan bestiller jeg kjøretimer?",
+      answer:
+        "Du kan ta kontakt med oss via telefon eller kontaktskjema, så hjelper vi deg i gang.",
+    },
+  ],
 };
