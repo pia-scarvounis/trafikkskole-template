@@ -22,10 +22,17 @@ export type FAQItem = {
   answer: string;
 };
 
+export type Review = {
+    name: string;
+    text: string;
+
+}
+
 export type WhyUs = {
   heading: string;
   points: string[];
 };
+
 
 export type SiteConfig = {
   brand: {
@@ -48,6 +55,7 @@ export type SiteConfig = {
   process: string[];
   prices: PriceItem[];
   whyUs: WhyUs;
+reviews: Review[];
   faq: FAQItem[];
 };
 
@@ -132,6 +140,25 @@ export const siteConfig: SiteConfig = {
       description: "Samlet opplæring til en gunstigere pris.",
     },
   ],
+
+  reviews: [
+  {
+    name: "Tidligere elev",
+    text:
+      "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
+  },
+  {
+    name: "Elev",
+    text:
+      "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
+  },
+  {
+    name: "Forelder",
+    text:
+      "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
+  },
+],
+
 
   whyUs: {
     heading: "Hvorfor velge oss?",
