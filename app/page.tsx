@@ -1,8 +1,12 @@
+import Hero from "@/components/sections/Hero";
+import Services from "@/components/sections/Services";
+
 export default function Home() {
   return (
     <main>
-      <h1>Trafikkskole template</h1>
-      <p>One-page mal under utvikling.</p>
+      <Hero />
+      <Services />
     </main>
   );
 }
+
