@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
+import LanguageToggle from "@/components/ui/LanguageToggle"; // flytte til header senere, ligger her nå bare for å teste
+
 
 export default function Hero() {
   const { hero } = siteConfig;
@@ -13,6 +15,7 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           {/* Venstre: tekst */}
+
           <div>
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
               {hero.headline[lang]}

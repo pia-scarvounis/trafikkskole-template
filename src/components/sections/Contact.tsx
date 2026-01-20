@@ -1,12 +1,16 @@
+"use client";
+
 import { siteConfig } from "@/data/siteConfig";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
   const { brand, contact } = siteConfig;
+  const { lang } = useLanguage();
 
   return (
     <section id="kontakt">
-      <h2>{contact.heading}</h2>
-      <p>{contact.subtext}</p>
+      <h2>{contact.heading[lang]}</h2>
+      <p>{contact.subtext[lang]}</p>
 
       <div style={{ marginTop: 16 }}>
         <p>
@@ -30,8 +34,7 @@ export default function Contact() {
       <div style={{ marginTop: 20 }}>
         <h3>Send oss en melding</h3>
         <p style={{ marginTop: 6 }}>
-          Dette skjemaet åpner e-postprogrammet ditt (ingen innlogging eller
-          backend i v1).
+          Dette skjemaet åpner e-postprogrammet ditt (ingen innlogging eller backend i v1).
         </p>
 
         <form

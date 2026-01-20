@@ -70,8 +70,8 @@ export type SiteConfig = {
   };
 
   contact: {
-    heading: string;
-    subtext: string;
+    heading: LocalizedText;
+    subtext: LocalizedText;
   };
 
   services: Service[];
@@ -94,7 +94,7 @@ export const siteConfig: SiteConfig = {
 
   features: {
     // Sett true for kunder som vil ha språkvalg i header
-    languageSwitch: false,
+    languageSwitch: true,
   },
 
   hero: {
@@ -120,11 +120,16 @@ export const siteConfig: SiteConfig = {
     },
   },
 
-  contact: {
-    heading: "Kontakt oss",
-    subtext:
-      "Ta kontakt for å bestille kjøretimer eller kurs, eller hvis du har spørsmål.",
+contact: {
+  heading: {
+    no: "Kontakt oss",
+    en: "Contact us",
   },
+  subtext: {
+    no: "Ta kontakt for å bestille kjøretimer eller kurs, eller hvis du har spørsmål.",
+    en: "Get in touch to book lessons or courses, or if you have any questions.",
+  },
+},
 
   services: [
     {
