@@ -46,6 +46,11 @@ export type FeatureFlags = {
   languageSwitch: boolean;
 };
 
+export type LocalizedText = {
+  no: string;
+  en: string;
+};
+
 export type SiteConfig = {
   brand: {
     name: string;
@@ -57,8 +62,8 @@ export type SiteConfig = {
   features: FeatureFlags;
 
   hero: {
-    headline: string;
-    subtext: string;
+    headline: LocalizedText;
+    subtext: LocalizedText;
     primaryCta: CTA;
     secondaryCta: CTA;
     image?: HeroImage;
@@ -87,15 +92,20 @@ export const siteConfig: SiteConfig = {
     location: "Oslo",
   },
 
-  // Feature flags: slå funksjoner av/på per kunde
   features: {
-    // Sett til true for kunder som vil ha språkvalg i header
+    // Sett true for kunder som vil ha språkvalg i header
     languageSwitch: false,
   },
 
   hero: {
-    headline: "Klar for førerkortet?",
-    subtext: "Vi hjelper deg hele veien – fra første kjøretime til oppkjøring.",
+    headline: {
+      no: "Klar for førerkortet?",
+      en: "Ready to get your driver’s license?",
+    },
+    subtext: {
+      no: "Vi hjelper deg hele veien – fra første kjøretime til oppkjøring.",
+      en: "We guide you all the way — from your first lesson to the driving test.",
+    },
     primaryCta: {
       label: "Bestill kjøretime",
       href: "#kontakt",
@@ -218,5 +228,3 @@ export const siteConfig: SiteConfig = {
     privacyHref: "/personvern",
   },
 };
-
-

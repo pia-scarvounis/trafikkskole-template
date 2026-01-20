@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
   const { hero } = siteConfig;
+  const { lang } = useLanguage();
 
   return (
     <section id="hero" className="py-16">
@@ -11,10 +15,11 @@ export default function Hero() {
           {/* Venstre: tekst */}
           <div>
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              {hero.headline}
+              {hero.headline[lang]}
             </h1>
+
             <p className="mt-4 text-lg text-gray-600">
-              {hero.subtext}
+              {hero.subtext[lang]}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -34,8 +39,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Høyre: bilde (valgfritt) */}
-          {hero.image ? (
+          {/* Høyre: bilde */}
+          {hero.image && (
             <div className="rounded-2xl border bg-gray-50 overflow-hidden">
               <Image
                 src={hero.image.src}
@@ -46,9 +51,10 @@ export default function Hero() {
                 priority
               />
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </section>
   );
 }
+
