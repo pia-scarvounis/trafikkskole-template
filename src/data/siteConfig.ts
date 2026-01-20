@@ -23,16 +23,19 @@ export type FAQItem = {
 };
 
 export type Review = {
-    name: string;
-    text: string;
-
-}
+  name: string;
+  text: string;
+};
 
 export type WhyUs = {
   heading: string;
   points: string[];
 };
 
+export type FooterConfig = {
+  orgNumber: string;
+  privacyHref: string;
+};
 
 export type SiteConfig = {
   brand: {
@@ -55,8 +58,9 @@ export type SiteConfig = {
   process: string[];
   prices: PriceItem[];
   whyUs: WhyUs;
-reviews: Review[];
+  reviews: Review[];
   faq: FAQItem[];
+  footer: FooterConfig;
 };
 
 export const siteConfig: SiteConfig = {
@@ -69,8 +73,7 @@ export const siteConfig: SiteConfig = {
 
   hero: {
     headline: "Klar for førerkortet?",
-    subtext:
-      "Vi hjelper deg hele veien – fra første kjøretime til oppkjøring.",
+    subtext: "Vi hjelper deg hele veien – fra første kjøretime til oppkjøring.",
     primaryCta: {
       label: "Bestill kjøretime",
       href: "#kontakt",
@@ -90,8 +93,7 @@ export const siteConfig: SiteConfig = {
   services: [
     {
       title: "Kjøretimer",
-      description:
-        "Individuell opplæring tilpasset nivå og progresjon.",
+      description: "Individuell opplæring tilpasset nivå og progresjon.",
       cta: {
         label: "Bestill kjøretime",
         href: "#kontakt",
@@ -99,8 +101,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       title: "Obligatoriske kurs",
-      description:
-        "Vi guider deg trygt gjennom alle kurs du må ha.",
+      description: "Vi guider deg trygt gjennom alle kurs du må ha.",
       cta: {
         label: "Se kurs",
         href: "#kontakt",
@@ -108,8 +109,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       title: "Oppkjøringstrening",
-      description:
-        "Forberedelse som gir trygghet på den store dagen.",
+      description: "Forberedelse som gir trygghet på den store dagen.",
       cta: {
         label: "Kontakt oss",
         href: "#kontakt",
@@ -117,11 +117,7 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  process: [
-    "Velg girtype (manuell eller automat)",
-    "Bestill time",
-    "Kjør",
-  ],
+  process: ["Velg girtype (manuell eller automat)", "Bestill time", "Kjør"],
 
   prices: [
     {
@@ -141,25 +137,6 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  reviews: [
-  {
-    name: "Tidligere elev",
-    text:
-      "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
-  },
-  {
-    name: "Elev",
-    text:
-      "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
-  },
-  {
-    name: "Forelder",
-    text:
-      "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
-  },
-],
-
-
   whyUs: {
     heading: "Hvorfor velge oss?",
     points: [
@@ -168,6 +145,21 @@ export const siteConfig: SiteConfig = {
       "Fokus på trygg og effektiv progresjon",
     ],
   },
+
+  reviews: [
+    {
+      name: "Tidligere elev",
+      text: "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
+    },
+    {
+      name: "Elev",
+      text: "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
+    },
+    {
+      name: "Forelder",
+      text: "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
+    },
+  ],
 
   faq: [
     {
@@ -187,8 +179,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       question: "Kan jeg leie bil til oppkjøring?",
-      answer:
-        "Ja, mange elever leier bil av oss til førerprøven.",
+      answer: "Ja, mange elever leier bil av oss til førerprøven.",
     },
     {
       question: "Hvordan bestiller jeg kjøretimer?",
@@ -196,4 +187,10 @@ export const siteConfig: SiteConfig = {
         "Du kan ta kontakt med oss via telefon eller kontaktskjema, så hjelper vi deg i gang.",
     },
   ],
+
+  footer: {
+    orgNumber: "999 999 999",
+    privacyHref: "/personvern",
+  },
 };
+
