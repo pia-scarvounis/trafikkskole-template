@@ -42,6 +42,9 @@ export type HeroImage = {
   alt: string;
 };
 
+export type FeatureFlags = {
+  languageSwitch: boolean;
+};
 
 export type SiteConfig = {
   brand: {
@@ -50,24 +53,29 @@ export type SiteConfig = {
     email: string;
     location: string;
   };
-hero: {
-  headline: string;
-  subtext: string;
-  primaryCta: CTA;
-  secondaryCta: CTA;
-  image?: HeroImage;
-};
+
+  features: FeatureFlags;
+
+  hero: {
+    headline: string;
+    subtext: string;
+    primaryCta: CTA;
+    secondaryCta: CTA;
+    image?: HeroImage;
+  };
 
   contact: {
     heading: string;
     subtext: string;
   };
+
   services: Service[];
   process: string[];
   prices: PriceItem[];
   whyUs: WhyUs;
   reviews: Review[];
   faq: FAQItem[];
+
   footer: FooterConfig;
 };
 
@@ -77,6 +85,12 @@ export const siteConfig: SiteConfig = {
     phone: "99 99 99 99",
     email: "post@trafikkskole.no",
     location: "Oslo",
+  },
+
+  // Feature flags: slå funksjoner av/på per kunde
+  features: {
+    // Sett til true for kunder som vil ha språkvalg i header
+    languageSwitch: false,
   },
 
   hero: {
@@ -91,10 +105,9 @@ export const siteConfig: SiteConfig = {
       href: "#kontakt",
     },
     image: {
-  src: "/images/hero.jpg",
-  alt: "Trafikkskole og elev i bil",
-},
-
+      src: "/images/hero.jpg",
+      alt: "Trafikkskole og elev i bil",
+    },
   },
 
   contact: {
@@ -187,8 +200,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       question: "Tilbyr dere kjøretimer på engelsk?",
-      answer:
-        "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
+      answer: "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
     },
     {
       question: "Kan jeg leie bil til oppkjøring?",
@@ -206,4 +218,5 @@ export const siteConfig: SiteConfig = {
     privacyHref: "/personvern",
   },
 };
+
 
