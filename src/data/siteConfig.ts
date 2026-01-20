@@ -37,6 +37,12 @@ export type FooterConfig = {
   privacyHref: string;
 };
 
+export type HeroImage = {
+  src: string;
+  alt: string;
+};
+
+
 export type SiteConfig = {
   brand: {
     name: string;
@@ -44,12 +50,14 @@ export type SiteConfig = {
     email: string;
     location: string;
   };
-  hero: {
-    headline: string;
-    subtext: string;
-    primaryCta: CTA;
-    secondaryCta: CTA;
-  };
+hero: {
+  headline: string;
+  subtext: string;
+  primaryCta: CTA;
+  secondaryCta: CTA;
+  image?: HeroImage;
+};
+
   contact: {
     heading: string;
     subtext: string;
@@ -82,6 +90,11 @@ export const siteConfig: SiteConfig = {
       label: "Kontakt oss",
       href: "#kontakt",
     },
+    image: {
+  src: "/images/hero.jpg",
+  alt: "Trafikkskole og elev i bil",
+},
+
   },
 
   contact: {
