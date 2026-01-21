@@ -5,6 +5,8 @@ import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+   if (!siteConfig.features.hero) return null;
+   
   const { hero } = siteConfig;
   const { lang } = useLanguage();
 

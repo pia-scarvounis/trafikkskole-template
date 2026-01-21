@@ -34,8 +34,8 @@ export type FAQItem = {
 
 
 export type Review = {
-  name: string;
-  text: string;
+  name: LocalizedText;
+  text: LocalizedText;
 };
 
 export type WhyUs = {
@@ -46,7 +46,10 @@ export type WhyUs = {
 export type FooterConfig = {
   orgNumber: string;
   privacyHref: string;
+  privacyLabel: LocalizedText;
+  orgLabel: LocalizedText;
 };
+
 
 export type HeroImage = {
   src: string;
@@ -55,7 +58,18 @@ export type HeroImage = {
 
 export type FeatureFlags = {
   languageSwitch: boolean;
+
+  hero: boolean;
+  services: boolean;
+  process: boolean;
+  prices: boolean;
+  whyUs: boolean;
+  reviews: boolean;
+  faq: boolean;
+  contact: boolean;
+  footer: boolean;
 };
+
 
 export type LocalizedText = {
   no: string;
@@ -99,16 +113,27 @@ export type SiteConfig = {
 
 export const siteConfig: SiteConfig = {
   brand: {
-    name: "Trafikkskole Navn",
+    name: "Paulos trafikkskole",
     phone: "99 99 99 99",
     email: "post@trafikkskole.no",
     location: "Oslo",
   },
 
-  features: {
-    // Sett true for kunder som vil ha språkvalg i header
-    languageSwitch: true,
-  },
+features: {
+  // Sett true for kunder som vil ha språkvalg i header
+  languageSwitch: true,
+
+  hero: true,
+  services: true,
+  process: true,
+  prices: true,
+  whyUs: true,
+  reviews: true,
+  faq: true,
+  contact: true,
+  footer: true,
+},
+
 
   nav: [
     { label: "Tjenester", href: "#tjenester" },
@@ -211,20 +236,30 @@ export const siteConfig: SiteConfig = {
     ],
   },
 
-  reviews: [
-    {
-      name: "Tidligere elev",
-      text: "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
+reviews: [
+  {
+    name: { no: "Tidligere elev", en: "Former student" },
+    text: {
+      no: "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
+      en: "Very safe and effective training. I felt well taken care of throughout the entire process.",
     },
-    {
-      name: "Elev",
-      text: "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
+  },
+  {
+    name: { no: "Elev", en: "Student" },
+    text: {
+      no: "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
+      en: "Clear instructors and great follow-up. Highly recommended.",
     },
-    {
-      name: "Forelder",
-      text: "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
+  },
+  {
+    name: { no: "Forelder", en: "Parent" },
+    text: {
+      no: "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
+      en: "Professional and well-organized driving school. Very satisfied with the experience.",
     },
-  ],
+  },
+],
+
 
 faq: [
   {
@@ -281,8 +316,11 @@ faq: [
 
 
 
-  footer: {
-    orgNumber: "999 999 999",
-    privacyHref: "/personvern",
-  },
+footer: {
+  orgNumber: "999 999 999",
+  privacyHref: "/personvern",
+  privacyLabel: { no: "Personvern", en: "Privacy" },
+  orgLabel: { no: "Org.nr", en: "Org. no." },
+},
+
 };

@@ -1,6 +1,7 @@
 import { siteConfig } from "@/data/siteConfig";
 
 export default function WhyUs() {
+  if (!siteConfig.features.whyUs) return null;
   const { whyUs } = siteConfig;
 
   return (

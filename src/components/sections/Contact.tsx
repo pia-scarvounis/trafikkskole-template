@@ -4,6 +4,7 @@ import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
+  if (!siteConfig.features.contact) return null;
   const { brand, contact } = siteConfig;
   const { lang } = useLanguage();
 

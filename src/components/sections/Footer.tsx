@@ -1,7 +1,13 @@
+"use client";
+
 import { siteConfig } from "@/data/siteConfig";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  if (!siteConfig.features.footer) return null;
+
   const { brand, footer } = siteConfig;
+  const { lang } = useLanguage();
 
   return (
     <footer
@@ -13,9 +19,13 @@ export default function Footer() {
       }}
     >
       <div style={{ display: "grid", gap: 6 }}>
-        <div>© {new Date().getFullYear()} {brand.name}</div>
-        <div>Org.nr: {footer.orgNumber}</div>
-        <a href={footer.privacyHref}>Personvern</a>
+        <div>
+          © {new Date().getFullYear()} {brand.name}
+        </div>
+        <div>
+          {footer.orgLabel[lang]}: {footer.orgNumber}
+        </div>
+        <a href={footer.privacyHref}>{footer.privacyLabel[lang]}</a>
       </div>
     </footer>
   );

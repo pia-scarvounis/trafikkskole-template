@@ -1,6 +1,7 @@
 import { siteConfig } from "@/data/siteConfig";
 
 export default function Process() {
+  if (!siteConfig.features.prices) return null;
   return (
     <section>
       <h2>Veien til førerkortet</h2>

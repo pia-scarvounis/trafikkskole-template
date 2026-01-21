@@ -3,6 +3,7 @@ import Image from "next/image";
 
 
 export default function Services() {
+  if (!siteConfig.features.services) return null;
   const { services } = siteConfig;
 
   return (
