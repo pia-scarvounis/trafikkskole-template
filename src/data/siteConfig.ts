@@ -1,25 +1,29 @@
 // src/data/siteConfig.ts
 
+export type LocalizedText = {
+  no: string;
+  en: string;
+};
+
 export type NavItem = {
-  label: string;
+  label: string; // kan gjøres LocalizedText senere
   href: string;
 };
 
 export type CTA = {
-  label: string;
+  label: LocalizedText;
   href: string;
 };
 
 export type Service = {
-  title: string;
-  description: string;
+  title: LocalizedText;
+  description: LocalizedText;
   cta: CTA;
   icon?: {
     src: string;
-    alt: string;
+    alt: LocalizedText;
   };
 };
-
 
 export type PriceItem = {
   title: string;
@@ -31,7 +35,6 @@ export type FAQItem = {
   question: LocalizedText;
   answer: LocalizedText;
 };
-
 
 export type Review = {
   name: LocalizedText;
@@ -50,7 +53,6 @@ export type FooterConfig = {
   orgLabel: LocalizedText;
 };
 
-
 export type HeroImage = {
   src: string;
   alt: string;
@@ -68,12 +70,6 @@ export type FeatureFlags = {
   faq: boolean;
   contact: boolean;
   footer: boolean;
-};
-
-
-export type LocalizedText = {
-  no: string;
-  en: string;
 };
 
 export type SiteConfig = {
@@ -119,21 +115,19 @@ export const siteConfig: SiteConfig = {
     location: "Oslo",
   },
 
-features: {
-  // Sett true for kunder som vil ha språkvalg i header
-  languageSwitch: true,
+  features: {
+    languageSwitch: true,
 
-  hero: true,
-  services: true,
-  process: true,
-  prices: true,
-  whyUs: true,
-  reviews: true,
-  faq: true,
-  contact: true,
-  footer: true,
-},
-
+    hero: true,
+    services: true,
+    process: true,
+    prices: true,
+    whyUs: true,
+    reviews: true,
+    faq: true,
+    contact: true,
+    footer: true,
+  },
 
   nav: [
     { label: "Tjenester", href: "#tjenester" },
@@ -152,11 +146,11 @@ features: {
       en: "We guide you all the way - from your first lesson to the driving test.",
     },
     primaryCta: {
-      label: "Bestill kjøretime",
+      label: { no: "Bestill kjøretime", en: "Book a lesson" },
       href: "#kontakt",
     },
     secondaryCta: {
-      label: "Kontakt oss",
+      label: { no: "Kontakt oss", en: "Contact us" },
       href: "#kontakt",
     },
     image: {
@@ -178,30 +172,47 @@ features: {
 
   services: [
     {
-
-    icon: { src: "/icons/kjoretime.png", alt: "Kjøretimer" },
-      title: "Kjøretimer",
-      description: "Individuell opplæring tilpasset nivå og progresjon.",
+      icon: {
+        src: "/icons/kjoretime.png",
+        alt: { no: "Kjøretimer", en: "Driving lessons" },
+      },
+      title: { no: "Kjøretimer", en: "Driving lessons" },
+      description: {
+        no: "Individuell opplæring tilpasset nivå og progresjon.",
+        en: "Individual training tailored to your level and progress.",
+      },
       cta: {
-        label: "Bestill kjøretime",
+        label: { no: "Bestill kjøretime", en: "Book a lesson" },
         href: "#kontakt",
       },
     },
     {
-      icon: { src: "/icons/kurs.png", alt: "kurs"},
-      title: "Obligatoriske kurs",
-      description: "Vi guider deg trygt gjennom alle kurs du må ha.",
+      icon: {
+        src: "/icons/kurs.png",
+        alt: { no: "Kurs", en: "Courses" },
+      },
+      title: { no: "Obligatoriske kurs", en: "Mandatory courses" },
+      description: {
+        no: "Vi guider deg trygt gjennom alle kurs du må ha.",
+        en: "We guide you safely through all mandatory courses.",
+      },
       cta: {
-        label: "Se kurs",
+        label: { no: "Se kurs", en: "View courses" },
         href: "#kontakt",
       },
     },
     {
-      icon: { src: "/icons/forerprove.png", alt: "Førerprøve"},
-      title: "Oppkjøringstrening",
-      description: "Forberedelse som gir trygghet på den store dagen.",
+      icon: {
+        src: "/icons/forerprove.png",
+        alt: { no: "Førerprøve", en: "Driving test" },
+      },
+      title: { no: "Oppkjøringstrening", en: "Test preparation" },
+      description: {
+        no: "Forberedelse som gir trygghet på den store dagen.",
+        en: "Preparation that builds confidence for the big day.",
+      },
       cta: {
-        label: "Kontakt oss",
+        label: { no: "Kontakt oss", en: "Contact us" },
         href: "#kontakt",
       },
     },
@@ -236,91 +247,57 @@ features: {
     ],
   },
 
-reviews: [
-  {
-    name: { no: "Tidligere elev", en: "Former student" },
-    text: {
-      no: "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
-      en: "Very safe and effective training. I felt well taken care of throughout the entire process.",
+  reviews: [
+    {
+      name: { no: "Tidligere elev", en: "Former student" },
+      text: {
+        no: "Veldig trygg og effektiv opplæring. Følte meg godt ivaretatt hele veien.",
+        en: "Very safe and effective training. I felt well taken care of throughout the entire process.",
+      },
     },
-  },
-  {
-    name: { no: "Elev", en: "Student" },
-    text: {
-      no: "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
-      en: "Clear instructors and great follow-up. Highly recommended.",
+    {
+      name: { no: "Elev", en: "Student" },
+      text: {
+        no: "Tydelige instruktører og god oppfølging. Anbefales på det varmeste.",
+        en: "Clear instructors and great follow-up. Highly recommended.",
+      },
     },
-  },
-  {
-    name: { no: "Forelder", en: "Parent" },
-    text: {
-      no: "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
-      en: "Professional and well-organized driving school. Very satisfied with the experience.",
+    {
+      name: { no: "Forelder", en: "Parent" },
+      text: {
+        no: "Profesjonell og ryddig trafikkskole. Veldig fornøyd med opplevelsen.",
+        en: "Professional and well-organized driving school. Very satisfied with the experience.",
+      },
     },
-  },
-],
+  ],
 
+  faq: [
+    {
+      question: {
+        no: "Hvem må ta trafikalt grunnkurs?",
+        en: "Who needs to take the mandatory basic traffic course?",
+      },
+      answer: {
+        no: "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre.",
+        en: "If you are under 25, you must complete the basic traffic course before you can practice driving.",
+      },
+    },
+    {
+      question: {
+        no: "Tilbyr dere kjøretimer på engelsk?",
+        en: "Do you offer driving lessons in English?",
+      },
+      answer: {
+        no: "Ja, vi tilbyr kjøretimer på engelsk.",
+        en: "Yes, we offer driving lessons in English.",
+      },
+    },
+  ],
 
-faq: [
-  {
-    question: {
-      no: "Hvem må ta trafikalt grunnkurs?",
-      en: "Who needs to take the mandatory basic traffic course?",
-    },
-    answer: {
-      no: "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre. Er du usikker på hva som gjelder for deg, hjelper vi deg gjerne.",
-      en: "If you are under 25, you must complete the basic traffic course before you can practice driving. If you’re unsure what applies to you, we’re happy to help.",
-    },
+  footer: {
+    orgNumber: "999 999 999",
+    privacyHref: "/personvern",
+    privacyLabel: { no: "Personvern", en: "Privacy" },
+    orgLabel: { no: "Org.nr", en: "Org. no." },
   },
-  {
-    question: {
-      no: "Hvor lang tid tar det å ta førerkort?",
-      en: "How long does it take to get a driver’s license?",
-    },
-    answer: {
-      no: "Det varierer fra elev til elev. Vi lager en plan basert på nivå, erfaring og hvor ofte du kan øve.",
-      en: "It varies from student to student. We’ll create a plan based on your level, experience, and how often you can practice.",
-    },
-  },
-  {
-    question: {
-      no: "Tilbyr dere kjøretimer på engelsk?",
-      en: "Do you offer driving lessons in English?",
-    },
-    answer: {
-      no: "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
-      en: "Yes, we offer driving lessons (and in some cases courses) in English.",
-    },
-  },
-  {
-    question: {
-      no: "Kan jeg leie bil til oppkjøring?",
-      en: "Can I rent a car for the driving test?",
-    },
-    answer: {
-      no: "Ja, mange elever leier bil av oss til førerprøven. Ta kontakt, så finner vi en løsning som passer.",
-      en: "Yes, many students rent a car from us for the driving test. Get in touch and we’ll find a solution that fits.",
-    },
-  },
-  {
-    question: {
-      no: "Hvordan bestiller jeg kjøretimer?",
-      en: "How do I book driving lessons?",
-    },
-    answer: {
-      no: "Du kan ta kontakt med oss via telefon eller kontaktskjema, så hjelper vi deg i gang.",
-      en: "You can contact us by phone or through the contact form, and we’ll help you get started.",
-    },
-  },
-],
-
-
-
-footer: {
-  orgNumber: "999 999 999",
-  privacyHref: "/personvern",
-  privacyLabel: { no: "Personvern", en: "Privacy" },
-  orgLabel: { no: "Org.nr", en: "Org. no." },
-},
-
 };

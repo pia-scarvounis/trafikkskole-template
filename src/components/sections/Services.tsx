@@ -1,10 +1,14 @@
+"use client";
+
 import { siteConfig } from "@/data/siteConfig";
 import Image from "next/image";
-
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Services() {
   if (!siteConfig.features.services) return null;
+
   const { services } = siteConfig;
+  const { lang } = useLanguage();
 
   return (
     <section
@@ -13,7 +17,7 @@ export default function Services() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-semibold text-gray-900">
-          Våre tjenester
+          {lang === "no" ? "Våre tjenester" : "Our services"}
         </h2>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -24,21 +28,21 @@ export default function Services() {
             >
               <div>
                 {service.icon && (
-  <Image
-    src={service.icon.src}
-    alt={service.icon.alt}
-    width={28}
-    height={28}
-    className="opacity-80"
-  />
-)}
+                  <Image
+                    src={service.icon.src}
+                    alt={service.icon.alt[lang]}
+                    width={28}
+                    height={28}
+                    className="opacity-80"
+                  />
+                )}
 
                 <h3 className="mt-1 text-lg font-semibold text-gray-900">
-                  {service.title}
+                  {service.title[lang]}
                 </h3>
 
                 <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-                  {service.description}
+                  {service.description[lang]}
                 </p>
               </div>
 
@@ -46,7 +50,7 @@ export default function Services() {
                 href={service.cta.href}
                 className="mt-4 inline-flex items-center text-sm font-medium text-gray-900"
               >
-                {service.cta.label} →
+                {service.cta.label[lang]} →
               </a>
             </div>
           ))}
