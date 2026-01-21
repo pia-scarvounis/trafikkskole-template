@@ -28,9 +28,10 @@ export type PriceItem = {
 };
 
 export type FAQItem = {
-  question: string;
-  answer: string;
+  question: LocalizedText;
+  answer: LocalizedText;
 };
+
 
 export type Review = {
   name: string;
@@ -225,31 +226,60 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  faq: [
-    {
-      question: "Hvem må ta trafikalt grunnkurs?",
-      answer:
-        "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre. Er du usikker på hva som gjelder for deg, hjelper vi deg gjerne.",
+faq: [
+  {
+    question: {
+      no: "Hvem må ta trafikalt grunnkurs?",
+      en: "Who needs to take the mandatory basic traffic course?",
     },
-    {
-      question: "Hvor lang tid tar det å ta førerkort?",
-      answer:
-        "Det varierer fra elev til elev. Vi lager en plan basert på nivå, erfaring og hvor ofte du kan øve.",
+    answer: {
+      no: "Alle under 25 år må ta trafikalt grunnkurs før de kan øvelseskjøre. Er du usikker på hva som gjelder for deg, hjelper vi deg gjerne.",
+      en: "If you are under 25, you must complete the basic traffic course before you can practice driving. If you’re unsure what applies to you, we’re happy to help.",
     },
-    {
-      question: "Tilbyr dere kjøretimer på engelsk?",
-      answer: "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
+  },
+  {
+    question: {
+      no: "Hvor lang tid tar det å ta førerkort?",
+      en: "How long does it take to get a driver’s license?",
     },
-    {
-      question: "Kan jeg leie bil til oppkjøring?",
-      answer: "Ja, mange elever leier bil av oss til førerprøven.",
+    answer: {
+      no: "Det varierer fra elev til elev. Vi lager en plan basert på nivå, erfaring og hvor ofte du kan øve.",
+      en: "It varies from student to student. We’ll create a plan based on your level, experience, and how often you can practice.",
     },
-    {
-      question: "Hvordan bestiller jeg kjøretimer?",
-      answer:
-        "Du kan ta kontakt med oss via telefon eller kontaktskjema, så hjelper vi deg i gang.",
+  },
+  {
+    question: {
+      no: "Tilbyr dere kjøretimer på engelsk?",
+      en: "Do you offer driving lessons in English?",
     },
-  ],
+    answer: {
+      no: "Ja, vi tilbyr kjøretimer (og eventuelt kurs) på engelsk.",
+      en: "Yes, we offer driving lessons (and in some cases courses) in English.",
+    },
+  },
+  {
+    question: {
+      no: "Kan jeg leie bil til oppkjøring?",
+      en: "Can I rent a car for the driving test?",
+    },
+    answer: {
+      no: "Ja, mange elever leier bil av oss til førerprøven. Ta kontakt, så finner vi en løsning som passer.",
+      en: "Yes, many students rent a car from us for the driving test. Get in touch and we’ll find a solution that fits.",
+    },
+  },
+  {
+    question: {
+      no: "Hvordan bestiller jeg kjøretimer?",
+      en: "How do I book driving lessons?",
+    },
+    answer: {
+      no: "Du kan ta kontakt med oss via telefon eller kontaktskjema, så hjelper vi deg i gang.",
+      en: "You can contact us by phone or through the contact form, and we’ll help you get started.",
+    },
+  },
+],
+
+
 
   footer: {
     orgNumber: "999 999 999",

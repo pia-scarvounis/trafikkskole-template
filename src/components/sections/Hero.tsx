@@ -42,7 +42,7 @@ export default function Hero() {
           {/* Høyre: kun sirkelbilde */}
           {hero.image && (
             <div className="flex justify-center lg:justify-end">
-              <div className="relative h-[320px] w-[320px] sm:h-[380px] sm:w-[380px] overflow-hidden rounded-full">
+              <div className="relative h-[330px] w-[330px] sm:h-[380px] sm:w-[380px] overflow-hidden rounded-full">
                 <Image
                   src={hero.image.src}
                   alt={hero.image.alt}
