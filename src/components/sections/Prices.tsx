@@ -4,6 +4,7 @@ import { useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 
 export default function Prices() {
+  if (!siteConfig.features.prices) return null;
   const [showAll, setShowAll] = useState(false);
 
   const visiblePrices = showAll

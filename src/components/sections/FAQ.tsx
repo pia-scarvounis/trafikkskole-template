@@ -5,6 +5,8 @@ import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function FAQ() {
+if (!siteConfig.features.faq) return null;
+
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { lang } = useLanguage();
 
