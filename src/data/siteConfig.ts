@@ -1,5 +1,10 @@
 // src/data/siteConfig.ts
 
+export type NavItem = {
+  label: string;
+  href: string;
+};
+
 export type CTA = {
   label: string;
   href: string;
@@ -9,7 +14,12 @@ export type Service = {
   title: string;
   description: string;
   cta: CTA;
+  icon?: {
+    src: string;
+    alt: string;
+  };
 };
+
 
 export type PriceItem = {
   title: string;
@@ -61,6 +71,8 @@ export type SiteConfig = {
 
   features: FeatureFlags;
 
+  nav: NavItem[];
+
   hero: {
     headline: LocalizedText;
     subtext: LocalizedText;
@@ -97,14 +109,21 @@ export const siteConfig: SiteConfig = {
     languageSwitch: true,
   },
 
+  nav: [
+    { label: "Tjenester", href: "#tjenester" },
+    { label: "Priser", href: "#priser" },
+    { label: "FAQ", href: "#faq" },
+    { label: "Kontakt", href: "#kontakt" },
+  ],
+
   hero: {
     headline: {
       no: "Klar for førerkortet?",
       en: "Ready to get your driver’s license?",
     },
     subtext: {
-      no: "Vi hjelper deg hele veien – fra første kjøretime til oppkjøring.",
-      en: "We guide you all the way — from your first lesson to the driving test.",
+      no: "Vi hjelper deg hele veien - fra første kjøretime til oppkjøring.",
+      en: "We guide you all the way - from your first lesson to the driving test.",
     },
     primaryCta: {
       label: "Bestill kjøretime",
@@ -120,19 +139,21 @@ export const siteConfig: SiteConfig = {
     },
   },
 
-contact: {
-  heading: {
-    no: "Kontakt oss",
-    en: "Contact us",
+  contact: {
+    heading: {
+      no: "Kontakt oss",
+      en: "Contact us",
+    },
+    subtext: {
+      no: "Ta kontakt for å bestille kjøretimer eller kurs, eller hvis du har spørsmål.",
+      en: "Get in touch to book lessons or courses, or if you have any questions.",
+    },
   },
-  subtext: {
-    no: "Ta kontakt for å bestille kjøretimer eller kurs, eller hvis du har spørsmål.",
-    en: "Get in touch to book lessons or courses, or if you have any questions.",
-  },
-},
 
   services: [
     {
+
+    icon: { src: "/icons/kjoretime.png", alt: "Kjøretimer" },
       title: "Kjøretimer",
       description: "Individuell opplæring tilpasset nivå og progresjon.",
       cta: {
@@ -141,6 +162,7 @@ contact: {
       },
     },
     {
+      icon: { src: "/icons/kurs.png", alt: "kurs"},
       title: "Obligatoriske kurs",
       description: "Vi guider deg trygt gjennom alle kurs du må ha.",
       cta: {
@@ -149,6 +171,7 @@ contact: {
       },
     },
     {
+      icon: { src: "/icons/forerprove.png", alt: "Førerprøve"},
       title: "Oppkjøringstrening",
       description: "Forberedelse som gir trygghet på den store dagen.",
       cta: {

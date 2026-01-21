@@ -11,7 +11,7 @@ export default function Prices() {
     : siteConfig.prices.slice(0, 3);
 
   return (
-    <section>
+    <section id="priser">
       <h2>Priser</h2>
       <p>Oversikt over våre mest brukte tjenester og kurs.</p>
 

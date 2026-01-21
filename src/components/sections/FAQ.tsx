@@ -11,7 +11,7 @@ export default function FAQ() {
   }
 
   return (
-    <section>
+    <section id="faq">
       <h2>Ofte stilte spørsmål</h2>
       <p>Her finner du svar på noen av de vanligste spørsmålene.</p>
 

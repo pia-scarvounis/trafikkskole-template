@@ -1,3 +1,4 @@
+import Header from "@/components/ui/Header";
 import Hero from "@/components/sections/Hero";
 import Services from "@/components/sections/Services";
 import Process from "@/components/sections/Process";
@@ -11,6 +12,7 @@ import Footer from "@/components/sections/Footer";
 export default function Home() {
   return (
     <main>
+      <Header />
       <Hero />
       <Services />
       <Process />
