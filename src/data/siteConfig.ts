@@ -30,7 +30,7 @@ export type LocalizedText = {
   en: string;
 };
 
-// Brukes for lister som skal være språksensitive (f.eks. process, whyUs.points senere)
+// Brukes for lister som skal være språksensitive (f.eks. process, whyUs.points)
 export type LocalizedList = {
   no: string[];
   en: string[];
@@ -90,10 +90,21 @@ export type Review = {
   text: LocalizedText;
 };
 
+/**
+ * WhyUs:
+ * - WhyUs.tsx bruker i dag whyUs.heading og whyUs.points + valgfri image
+ * - For å gjøre config mer “som de andre komponentene”, legger vi også inn
+ *   optional eyebrow/subtext her (komponenten kan ignorere det uten å krasje).
+ */
 export type WhyUs = {
-  // Foreløpig kun norsk. Når dere vil kan dette gjøres språksensitivt på samme måte som process.
-  heading: string;
-  points: string[];
+  eyebrow?: LocalizedText; // valgfritt (matcher “SectionText”-mønsteret)
+  heading: LocalizedText;
+  subtext?: LocalizedText; // valgfritt
+  points: LocalizedList;
+  image?: {
+    src: string;
+    alt: LocalizedText;
+  };
 };
 
 export type FooterConfig = {
@@ -173,7 +184,10 @@ export type SiteConfig = {
     fullPriceListCta?: LinkCTA;
   };
 
+  // WHY US: innhold (heading/points/image). (Optional eyebrow/subtext støttes i type.)
   whyUs: WhyUs;
+
+  // Reviews og FAQ
   reviews: Review[];
   faq: FAQItem[];
 
@@ -204,9 +218,18 @@ export const siteConfig: SiteConfig = {
     footer: true,
   },
 
+  /**
+   * Viktig:
+   * - Section ID-ene i komponentene må matche href her (ankerscroll).
+   * - WhyUs.tsx har: <section id="hvorfor-oss" ...>
+   *   Derfor må href være "#hvorfor-oss" om du vil ha den i menyen.
+   */
   nav: [
     { label: { no: "Tjenester", en: "Services" }, href: "#tjenester" },
+    { label: { no: "Prosess", en: "Process" }, href: "#prosess" },
     { label: { no: "Priser", en: "Prices" }, href: "#priser" },
+    { label: { no: "Hvorfor oss", en: "Why us" }, href: "#hvorfor-oss" },
+    { label: { no: "Anmeldelser", en: "Reviews" }, href: "#anmeldelser" },
     { label: { no: "FAQ", en: "FAQ" }, href: "#faq" },
     { label: { no: "Kontakt", en: "Contact" }, href: "#kontakt" },
   ],
@@ -294,42 +317,49 @@ export const siteConfig: SiteConfig = {
   ],
 
   // PROCESS (mal-perfekt): både innhold og seksjonstekster i config
- process: {
-  no: [
-    "Kontakt oss og avklar behov (manuell/automat, nivå)",
-    "Planlegg opplæringsløp (timeplan og mål)",
-    "Kjøretimer og progresjon (trening og veiledning)",
-    "Trinnvurderinger ved behov (sjekkpunkter underveis)",
-    "Obligatoriske kurs (når det passer i løpet)",
-    "Oppkjøringstrening (siste finpuss)",
-    "Førerprøve/oppkjøring",
-  ],
-  en: [
-    "Get in touch and clarify your needs (manual/automatic, level)",
-    "Create a training plan (schedule and goals)",
-    "Driving lessons and progress (practice and guidance)",
-    "Progress assessments as needed (checkpoints along the way)",
-    "Mandatory courses (when it fits your plan)",
-    "Test preparation (final polish)",
-    "Driving test",
-  ],
-},
+  processSection: {
+    eyebrow: { no: "SLIK FUNGERER DET", en: "HOW IT WORKS" },
+    heading: { no: "En enkel prosess", en: "A simple process" },
+    subtext: {
+      no: "Vi tilpasser opplæringen til nivået ditt og sørger for trygg progresjon.",
+      en: "We tailor the training to your level and ensure safe progression.",
+    },
+  },
 
+  process: {
+    no: [
+      "Kontakt oss og avklar behov (manuell/automat, nivå)",
+      "Planlegg opplæringsløp (timeplan og mål)",
+      "Kjøretimer og progresjon (trening og veiledning)",
+      "Trinnvurderinger ved behov (sjekkpunkter underveis)",
+      "Obligatoriske kurs (når det passer i løpet)",
+      "Oppkjøringstrening (siste finpuss)",
+      "Førerprøve/oppkjøring",
+    ],
+    en: [
+      "Get in touch and clarify your needs (manual/automatic, level)",
+      "Create a training plan (schedule and goals)",
+      "Driving lessons and progress (practice and guidance)",
+      "Progress assessments as needed (checkpoints along the way)",
+      "Mandatory courses (when it fits your plan)",
+      "Test preparation (final polish)",
+      "Driving test",
+    ],
+  },
 
   // PRICES (mal-perfekt)
- pricesSection: {
-  eyebrow: { no: "PRISLISTE", en: "PRICE LIST" },
-  heading: { no: "Priser", en: "Prices" },
-  subtext: {
-    no: "Oversikt over våre mest brukte tjenester og kurs.",
-    en: "An overview of our most common services and courses.",
+  pricesSection: {
+    eyebrow: { no: "PRISLISTE", en: "PRICE LIST" },
+    heading: { no: "Priser", en: "Prices" },
+    subtext: {
+      no: "Oversikt over våre mest brukte tjenester og kurs.",
+      en: "An overview of our most common services and courses.",
+    },
+    fullPriceListCta: {
+      label: { no: "Se full prisliste", en: "View full price list" },
+      href: "/prisliste",
+    },
   },
-  fullPriceListCta: {
-    label: { no: "Se full prisliste", en: "View full price list" },
-    href: "/prisliste",
-  },
-},
-
 
   prices: [
     {
@@ -358,13 +388,49 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
+  /**
+   * WHY US
+   * - WhyUs.tsx forventer:
+   *   - whyUs.heading[lang]
+   *   - whyUs.points[lang] (array)
+   *   - whyUs.image.alt[lang] (hvis bilde finnes)
+   *
+   * - Tidligere feil her pleier å være:
+   *   1) points skrevet som string i stedet for string[]
+   *   2) alt skrevet som string i stedet for { no, en }
+   *   3) manglende "no"/"en" nøkler
+   *
+   * Denne strukturen matcher komponenten din direkte.
+   */
   whyUs: {
-    heading: "Hvorfor velge oss?",
-    points: [
-      "Godkjente og erfarne trafikklærere",
-      "Opplæring tilpasset ditt nivå og tempo",
-      "Fokus på trygg og effektiv progresjon",
-    ],
+    eyebrow: { no: "HVORFOR OSS", en: "WHY US" }, // valgfritt – komponenten kan ignorere
+    heading: {
+      no: "Hvorfor velge oss?",
+      en: "Why choose us?",
+    },
+    subtext: {
+      no: "Trygg opplæring, tydelig plan og instruktører som følger deg opp hele veien.",
+      en: "Safe training, a clear plan, and instructors who support you throughout the journey.",
+    },
+    points: {
+      no: [
+        "Godkjente og erfarne trafikklærere",
+        "Opplæring tilpasset ditt nivå og tempo",
+        "Fokus på trygg og effektiv progresjon",
+      ],
+      en: [
+        "Certified and experienced driving instructors",
+        "Training adapted to your level and pace",
+        "Focus on safe and effective progression",
+      ],
+    },
+    image: {
+      src: "/images/why-us.jpg",
+      alt: {
+        no: "Trafikklærer og elev under kjøretime",
+        en: "Driving instructor and student during a lesson",
+      },
+    },
   },
 
   reviews: [
