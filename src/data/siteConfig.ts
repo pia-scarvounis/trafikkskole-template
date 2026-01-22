@@ -6,7 +6,7 @@ export type LocalizedText = {
 };
 
 export type NavItem = {
-  label: string; // kan gjøres LocalizedText senere
+  label: LocalizedText; // kan gjøres LocalizedText senere
   href: string;
 };
 
@@ -129,12 +129,13 @@ export const siteConfig: SiteConfig = {
     footer: true,
   },
 
-  nav: [
-    { label: "Tjenester", href: "#tjenester" },
-    { label: "Priser", href: "#priser" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Kontakt", href: "#kontakt" },
-  ],
+nav: [
+  { label: { no: "Tjenester", en: "Services" }, href: "#tjenester" },
+  { label: { no: "Priser", en: "Prices" }, href: "#priser" },
+  { label: { no: "FAQ", en: "FAQ" }, href: "#faq" },
+  { label: { no: "Kontakt", en: "Contact" }, href: "#kontakt" },
+],
+
 
   hero: {
     headline: {
@@ -291,6 +292,27 @@ export const siteConfig: SiteConfig = {
         no: "Ja, vi tilbyr kjøretimer på engelsk.",
         en: "Yes, we offer driving lessons in English.",
       },
+    },
+       {
+      question: {
+        no: "Hvordan bestiller jeg kjøretimer?",
+        en: "How do I book driving lessons?",
+      },
+      answer: {
+        no: "Du kan bestille kjøretimer ved å kontakte oss via telefon, e-post eller ved å bruke bestillingsskjemaet på nettsiden vår.",
+        en: "Blabla, answer in English.",
+      },
+    },
+       {
+      question: {
+        no: "Hva er reglene for avbestilling av kjøretimer?",
+        en: "What is your cancellation policy",
+      },
+      answer: {
+        no: "Kjøretimer må avbestilles 24 timer før avtalt tidspunkt. For sen avbestilling kan belastes i henhold til våre vilkår",
+        en: "Driving lessons must be cancelled at least 24h before the scheduled time. Late canecellations may be charged according to our terms",
+      },
+      
     },
   ],
 
