@@ -317,17 +317,19 @@ export const siteConfig: SiteConfig = {
 
 
   // PRICES (mal-perfekt)
-  pricesSection: {
-    heading: { no: "Priser", en: "Prices" },
-    subtext: {
-      no: "Oversikt over våre mest brukte tjenester og kurs.",
-      en: "An overview of our most common services and courses.",
-    },
-    fullPriceListCta: {
-      label: { no: "Se full prisliste", en: "View full price list" },
-      href: "/prisliste",
-    },
+ pricesSection: {
+  eyebrow: { no: "PRISLISTE", en: "PRICE LIST" },
+  heading: { no: "Priser", en: "Prices" },
+  subtext: {
+    no: "Oversikt over våre mest brukte tjenester og kurs.",
+    en: "An overview of our most common services and courses.",
   },
+  fullPriceListCta: {
+    label: { no: "Se full prisliste", en: "View full price list" },
+    href: "/prisliste",
+  },
+},
+
 
   prices: [
     {
