@@ -6,19 +6,19 @@
  * Mal-prinsippene i dette prosjektet:
  *
  * 1) All kundetekst ligger i siteConfig (denne filen)
- *    - Komponentene skal i hovedsak bare "render" data herfra
+ *    - Komponentene renderer primært data herfra
  *    - Når vi selger malen, endrer nye kunder stort sett bare denne filen
  *
  * 2) Feature flags (features) styrer hva som vises
- *    - En kunde kan slå av/på seksjoner uten å endre komponentkode
+ *    - Kunder kan slå av/på seksjoner uten å endre komponentkode
  *    - Eksempel: features.reviews = false → Reviews-seksjonen rendres ikke
  *
  * 3) Språk løses med LocalizedText { no, en }
  *    - Komponenter bruker LanguageContext og henter tekst med: text[lang]
  *    - Dette gir kvalitet og kontroll (ingen automatisk oversettelse)
  *
- * 4) Seksjonstekster (heading/subtext/CTA) kan ligge i config
- *    - Da kan kunder endre overskrifter og CTA-tekster uten kodeendringer
+ * 4) Seksjonstekster (eyebrow/heading/subtext/CTA) ligger i config
+ *    - Gir “mal-perfekt” oppsett: kunder kan endre alt uten å røre komponenter
  */
 
 // ----------------------------
@@ -30,8 +30,14 @@ export type LocalizedText = {
   en: string;
 };
 
+// Brukes for lister som skal være språksensitive (f.eks. process, whyUs.points senere)
+export type LocalizedList = {
+  no: string[];
+  en: string[];
+};
+
 // Gjenbrukbar seksjonstittel/intro for mal.
-// Kan brukes på tvers av seksjoner (Prices, FAQ, Reviews, Services osv.)
+// Kan brukes på tvers av seksjoner (Process, Prices, FAQ, Reviews, Services osv.)
 export type SectionText = {
   eyebrow?: LocalizedText; // liten tekst over heading (valgfritt)
   heading: LocalizedText;
@@ -49,12 +55,10 @@ export type LinkCTA = {
 // ----------------------------
 
 export type NavItem = {
-  // Språksensitiv label i menyen (Header bruker item.label[lang])
-  label: LocalizedText;
+  label: LocalizedText; // Header bruker item.label[lang]
   href: string;
 };
 
-// CTA brukes bl.a. i Hero og Services
 export type CTA = {
   label: LocalizedText;
   href: string;
@@ -66,12 +70,11 @@ export type Service = {
   cta: CTA;
   icon?: {
     src: string;
-    alt: LocalizedText; // alt-tekst kan også være språksensitiv
+    alt: LocalizedText;
   };
 };
 
 export type PriceItem = {
-  // Prices-komponenten viser title/price/description på valgt språk
   title: LocalizedText;
   price: LocalizedText;
   description?: LocalizedText;
@@ -88,8 +91,7 @@ export type Review = {
 };
 
 export type WhyUs = {
-  // Dette er foreløpig bare norsk i din mal.
-  // Når dere vil: gjør heading + points til LocalizedText / to arrays (no/en).
+  // Foreløpig kun norsk. Når dere vil kan dette gjøres språksensitivt på samme måte som process.
   heading: string;
   points: string[];
 };
@@ -119,7 +121,10 @@ export type FeatureFlags = {
   services: boolean;
   process: boolean;
   prices: boolean;
-  fullPriceListCta: boolean,
+
+  // Valgfri CTA i Prices-seksjonen (lenke til full prisliste)
+  fullPriceListCta: boolean;
+
   whyUs: boolean;
   reviews: boolean;
   faq: boolean;
@@ -139,13 +144,10 @@ export type SiteConfig = {
     location: string;
   };
 
-  // Feature flags styrer hva som rendres
   features: FeatureFlags;
 
-  // Navigasjon i Header
   nav: NavItem[];
 
-  // HERO (forside)
   hero: {
     headline: LocalizedText;
     subtext: LocalizedText;
@@ -154,39 +156,27 @@ export type SiteConfig = {
     image?: HeroImage;
   };
 
-  // CONTACT (forside)
   contact: {
     heading: LocalizedText;
     subtext: LocalizedText;
   };
 
-  // SERVICES (forside)
   services: Service[];
 
-  // PROCESS (forside)
-  // Foreløpig bare norsk. Kan bli { no: string[]; en: string[] } senere.
-  process: string[];
+  // PROCESS: språksensitiv liste + seksjonstekster (mal-perfekt)
+  process: LocalizedList;
+  processSection?: SectionText;
 
-  // PRICES (forside)
-  // prices[] = prislinjene
+  // PRICES: prislinjer + seksjonstekster + valgfri CTA
   prices: PriceItem[];
-
-  // Seksjonstekster for priser + valgfri CTA til full prisliste
-  // Kunden kan fjerne fullPriceListCta hvis de ikke vil ha den.
   pricesSection?: SectionText & {
     fullPriceListCta?: LinkCTA;
   };
 
-  // WHY US (forside)
   whyUs: WhyUs;
-
-  // REVIEWS (forside)
   reviews: Review[];
-
-  // FAQ (forside)
   faq: FAQItem[];
 
-  // FOOTER
   footer: FooterConfig;
 };
 
@@ -199,7 +189,6 @@ export const siteConfig: SiteConfig = {
   },
 
   features: {
-    // Sett true for kunder som vil ha språkvalg i header
     languageSwitch: true,
 
     hero: true,
@@ -207,6 +196,7 @@ export const siteConfig: SiteConfig = {
     process: true,
     prices: true,
     fullPriceListCta: true,
+
     whyUs: true,
     reviews: true,
     faq: true,
@@ -214,7 +204,6 @@ export const siteConfig: SiteConfig = {
     footer: true,
   },
 
-  // NAV: språksensitive labels
   nav: [
     { label: { no: "Tjenester", en: "Services" }, href: "#tjenester" },
     { label: { no: "Priser", en: "Prices" }, href: "#priser" },
@@ -304,20 +293,39 @@ export const siteConfig: SiteConfig = {
     },
   ],
 
-  // Process er foreløpig på norsk (kan oversettes senere)
-  process: ["Velg girtype (manuell eller automat)", "Bestill time", "Kjør"],
+  // PROCESS (mal-perfekt): både innhold og seksjonstekster i config
+ process: {
+  no: [
+    "Kontakt oss og avklar behov (manuell/automat, nivå)",
+    "Planlegg opplæringsløp (timeplan og mål)",
+    "Kjøretimer og progresjon (trening og veiledning)",
+    "Trinnvurderinger ved behov (sjekkpunkter underveis)",
+    "Obligatoriske kurs (når det passer i løpet)",
+    "Oppkjøringstrening (siste finpuss)",
+    "Førerprøve/oppkjøring",
+  ],
+  en: [
+    "Get in touch and clarify your needs (manual/automatic, level)",
+    "Create a training plan (schedule and goals)",
+    "Driving lessons and progress (practice and guidance)",
+    "Progress assessments as needed (checkpoints along the way)",
+    "Mandatory courses (when it fits your plan)",
+    "Test preparation (final polish)",
+    "Driving test",
+  ],
+},
 
-  // PRICES: Seksjonstekst + valgfri CTA for "full prisliste"
+
+  // PRICES (mal-perfekt)
   pricesSection: {
     heading: { no: "Priser", en: "Prices" },
     subtext: {
       no: "Oversikt over våre mest brukte tjenester og kurs.",
       en: "An overview of our most common services and courses.",
     },
-    // Valgfri: kan fjernes hvis kunden ikke ønsker lenke/knapp
     fullPriceListCta: {
       label: { no: "Se full prisliste", en: "View full price list" },
-      href: "/prisliste", // kan være en side, PDF, ekstern URL, eller #kontakt
+      href: "/prisliste",
     },
   },
 
