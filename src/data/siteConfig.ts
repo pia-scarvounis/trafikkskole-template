@@ -112,6 +112,16 @@ export type FooterConfig = {
   privacyHref: string;
   privacyLabel: LocalizedText;
   orgLabel: LocalizedText;
+
+  /**
+   * Valgfri “credit” i footer.
+   * - Bra for mal-leverandør (“Design by ...”)
+   * - Kan fjernes (undefined) for white-label.
+   */
+  credit?: {
+    label: string; // vanligvis ikke språksensitiv
+    href: string;
+  };
 };
 
 export type HeroImage = {
@@ -505,5 +515,11 @@ export const siteConfig: SiteConfig = {
     privacyHref: "/personvern",
     privacyLabel: { no: "Personvern", en: "Privacy" },
     orgLabel: { no: "Org.nr", en: "Org. no." },
+
+    // Valgfritt: kan fjernes for white-label
+    credit: {
+      label: "Design by Drist",
+      href: "https://www.drist.no",
+    },
   },
 };

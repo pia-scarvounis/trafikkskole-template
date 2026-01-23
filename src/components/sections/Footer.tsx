@@ -1,3 +1,4 @@
+// src/components/sections/Footer.tsx
 "use client";
 
 import { siteConfig } from "@/data/siteConfig";
@@ -19,9 +20,7 @@ export default function Footer() {
             <div className="text-sm text-gray-800">
               <span className="font-semibold">{brand.name}</span>
               <span className="text-gray-500"> · </span>
-              <span className="text-gray-600">
-                © {new Date().getFullYear()}
-              </span>
+              <span className="text-gray-600">© {new Date().getFullYear()}</span>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -32,9 +31,7 @@ export default function Footer() {
                 </span>
               </span>
 
-              <span className="text-xs text-gray-600">
-                {brand.location}
-              </span>
+              <span className="text-xs text-gray-600">{brand.location}</span>
             </div>
           </div>
 
@@ -47,16 +44,13 @@ export default function Footer() {
               {footer.privacyLabel[safeLang]}
             </a>
 
-            <a
-              href="#"
-              className="text-sm text-gray-700 hover:text-gray-900"
-            >
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">
               {safeLang === "no" ? "Til toppen" : "Back to top"}
             </a>
           </div>
         </div>
 
-        {/* Bunn */}
+        {/* Bunnlinje */}
         <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-gray-600">
           <span>
             {safeLang === "no"
@@ -64,14 +58,17 @@ export default function Footer() {
               : "Designed for a simple, fast, and clear driving school website."}
           </span>
 
-          <a
-            href="https://www.drist.no"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 underline underline-offset-4"
-          >
-            Design by Drist
-          </a>
+          {/* Credit (valgfri) */}
+          {footer.credit?.href && footer.credit?.label && (
+            <a
+              href={footer.credit.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-900 underline underline-offset-4"
+            >
+              {footer.credit.label}
+            </a>
+          )}
         </div>
       </div>
     </footer>

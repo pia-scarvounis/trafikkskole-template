@@ -9,28 +9,23 @@ export default function Contact() {
 
   const { brand, contact } = siteConfig;
   const { lang } = useLanguage();
-
-  // Språk-fallback (samme mønster som WhyUs)
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
-  /**
-   * VIKTIG:
-   * Dette er eneste stedet som må endres senere
-   * når vi kobler på ekte løsning (API, e-post, etc.)
-   */
-  const formAction = `mailto:${brand.email}`; // ← senere: "/api/contact" eller ekstern URL
-
   return (
-    <section id="kontakt" className="py-28 bg-[#EAF6F1]">
+    <section id="kontakt" className="bg-[#EAF6F1] py-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Overskrift */}
-        <h2 className="text-3xl font-semibold text-gray-900">
+        {/* Eyebrow */}
+        <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">
+          {safeLang === "no" ? "Kontakt" : "Contact"}
+        </p>
+
+        {/* Heading */}
+        <h2 className="mt-2 text-3xl font-semibold text-gray-900 sm:text-4xl">
           {contact.heading[safeLang]}
         </h2>
 
-        <p className="mt-4 text-gray-700">
-          {contact.subtext[safeLang]}
-        </p>
+        {/* Subtext */}
+        <p className="mt-4 text-gray-600">{contact.subtext[safeLang]}</p>
 
         {/* Kontaktinfo */}
         <div className="mt-8 space-y-2 text-gray-800">
@@ -38,65 +33,66 @@ export default function Contact() {
             <strong>Telefon:</strong>{" "}
             <a
               href={`tel:${brand.phone.replace(/\s/g, "")}`}
-              className="underline"
+              className="underline underline-offset-4"
             >
               {brand.phone}
             </a>
           </p>
-
           <p>
             <strong>E-post:</strong>{" "}
-            <a href={`mailto:${brand.email}`} className="underline">
+            <a
+              href={`mailto:${brand.email}`}
+              className="underline underline-offset-4"
+            >
               {brand.email}
             </a>
           </p>
-
           <p>
             <strong>Sted:</strong> {brand.location}
           </p>
         </div>
 
-        {/* CTA-knapper */}
-        <div className="mt-6 flex flex-wrap gap-4">
+        {/* CTA-knapper (mobil: stack, desktop: på linje) */}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
           <a
             href={`tel:${brand.phone.replace(/\s/g, "")}`}
-            className="px-5 py-2 rounded-full bg-gray-900 text-white text-sm font-medium"
+            className="w-full sm:w-auto text-center rounded-full bg-gray-900 px-6 py-2 text-sm font-medium text-white hover:bg-gray-800"
           >
             {safeLang === "no" ? "Ring oss" : "Call us"}
           </a>
 
           <a
             href={`mailto:${brand.email}`}
-            className="px-5 py-2 rounded-full border border-gray-900 text-sm font-medium"
+            className="w-full sm:w-auto text-center rounded-full border border-gray-400 px-6 py-2 text-sm font-medium text-gray-900 hover:bg-white"
           >
             {safeLang === "no" ? "Send e-post" : "Send email"}
           </a>
         </div>
 
         {/* Skjema */}
-        <div className="mt-12">
+        <div className="mt-14">
           <h3 className="text-xl font-semibold text-gray-900">
             {safeLang === "no" ? "Send oss en melding" : "Send us a message"}
           </h3>
 
           <p className="mt-2 text-sm text-gray-600">
             {safeLang === "no"
-              ? "Skjemaet åpner e-postprogrammet ditt (ingen backend i v1)."
+              ? "Dette skjemaet åpner e-postprogrammet ditt (ingen backend i v1)."
               : "This form opens your email client (no backend in v1)."}
           </p>
 
           <form
-            action={formAction}
+            className="mt-6 grid max-w-lg gap-4"
+            action={`mailto:${brand.email}`}
             method="post"
             encType="text/plain"
-            className="mt-6 grid gap-4 max-w-xl"
           >
             <label className="text-sm">
               {safeLang === "no" ? "Navn" : "Name"}
               <input
                 name="Navn"
                 type="text"
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
               />
             </label>
 
@@ -105,7 +101,7 @@ export default function Contact() {
               <input
                 name="Telefon"
                 type="text"
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
               />
             </label>
 
@@ -114,13 +110,13 @@ export default function Contact() {
               <textarea
                 name="Melding"
                 rows={4}
-                className="mt-1 w-full rounded-md border px-3 py-2"
+                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
               />
             </label>
 
             <button
               type="submit"
-              className="mt-2 self-start px-6 py-2 rounded-full bg-gray-900 text-white text-sm font-medium"
+              className="mt-4 w-full sm:w-auto rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-gray-800"
             >
               {safeLang === "no" ? "Send melding" : "Send message"}
             </button>
