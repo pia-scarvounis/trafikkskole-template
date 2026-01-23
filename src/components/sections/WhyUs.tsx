@@ -24,7 +24,7 @@ export default function WhyUs() {
   // Trygg heading (fallback)
   const heading = whyUs.heading?.[safeLang] ?? whyUs.heading?.no ?? "";
 
-  // Trygg liste: map() kan aldri krasje
+  // Trygg liste: map() kan aldri kræsje
   const points = whyUs.points?.[safeLang] ?? whyUs.points?.no ?? [];
 
   return (
