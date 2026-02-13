@@ -13,7 +13,7 @@ export default function Services() {
   return (
     <section
       id="tjenester"
-      className="py-24 bg-gradient-to-b from-[#EEF7F4] via-[#F6FCFA] to-white"
+      className="py-32 bg-gradient-to-b from-[#EEF7F4] via-[#F6FCFA] to-white"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-semibold text-gray-900">
@@ -37,18 +37,43 @@ export default function Services() {
                   />
                 )}
 
-                <h3 className="mt-1 text-lg font-semibold text-gray-900">
+                <h3 className="mt-2 text-lg font-semibold text-gray-900">
                   {service.title[lang]}
                 </h3>
 
                 <p className="mt-2 text-sm text-gray-700 leading-relaxed">
                   {service.description[lang]}
                 </p>
+
+                {/* Pris */}
+                {service.price && (
+                  <p className="mt-4 text-base font-semibold text-gray-900">
+                    {lang === "no" ? "Pris: " : "Price: "}
+                    <span className="font-semibold">{service.price[lang]}</span>
+                  </p>
+                )}
+
+                {/* Punktliste */}
+                {service.bullets?.[lang]?.length ? (
+                  <ul className="mt-4 space-y-2">
+                    {service.bullets[lang].map((item) => (
+                      <li key={item} className="flex gap-3 text-sm text-gray-700">
+                        <span
+                          aria-hidden
+                          className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/70 text-[#2FAF7D]"
+                        >
+                          ✓
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
 
               <a
                 href={service.cta.href}
-                className="mt-4 inline-flex items-center text-sm font-medium text-gray-900"
+                className="mt-6 inline-flex items-center text-sm font-medium text-gray-900"
               >
                 {service.cta.label[lang]} →
               </a>

@@ -11,7 +11,9 @@ export default function Hero() {
   const { lang } = useLanguage();
 
   return (
-    <section id="hero" className="py-20 bg-[#EEF7F4]">
+    <section id="hero" className="pt-32 pb-24 bg-[#EEF7F4]"
+> 
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
@@ -40,8 +42,8 @@ export default function Hero() {
 
           {hero.image && (
             <div className="flex justify-center lg:justify-end">
-              <div className="relative h-[330px] w-[330px] sm:h-[380px] sm:w-[380px] overflow-hidden rounded-full">
-                <Image
+              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-xl">
+<Image
                   src={hero.image.src}
                   alt={hero.image.alt}
                   fill

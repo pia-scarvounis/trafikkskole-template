@@ -25,7 +25,11 @@ export default function Reviews() {
   if (!reviews || reviews.length === 0) return null;
 
   return (
-    <section id="anmeldelser" className="relative py-28 overflow-hidden">
+    <section
+      id="anmeldelser"
+      className="relative py-32 overflow-hidden"
+    >
+      {/* Skrå bakgrunn */}
       <div
         aria-hidden
         className="absolute inset-0 -skew-y-2 bg-[#E6F3EE] origin-top-left"
@@ -37,7 +41,9 @@ export default function Reviews() {
         </p>
 
         <h2 className="mt-3 text-center text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-          {safeLang === "no" ? "Hva kundene våre sier" : "Customer testimonials"}
+          {safeLang === "no"
+            ? "Hva kundene våre sier"
+            : "Customer testimonials"}
         </h2>
 
         <p className="mt-4 text-center text-sm text-gray-600 sm:text-base">

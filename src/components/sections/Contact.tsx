@@ -12,7 +12,7 @@ export default function Contact() {
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
   return (
-    <section id="kontakt" className="bg-[#EAF6F1] py-24">
+    <section id="kontakt" className="bg-[#EAF6F1] py-28">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Eyebrow */}
         <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">
