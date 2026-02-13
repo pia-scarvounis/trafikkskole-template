@@ -80,10 +80,10 @@ export type Service = {
   title: LocalizedText;
   description: LocalizedText;
 
-  // ✅ NYTT: prisfelt (valgfritt)
+  // NYTT: prisfelt (valgfritt)
   price?: LocalizedText;
 
-  // ✅ NYTT: punktliste (valgfritt)
+  // NYTT: punktliste (valgfritt)
   bullets?: {
     no: string[];
     en: string[];
@@ -102,6 +102,14 @@ export type PriceItem = {
   price: LocalizedText;
   description?: LocalizedText;
 };
+
+export type LicenseClassItem = {
+  code: string;
+  title: string;
+  description: string;
+  icon?: string; // valgfri nå, sjekk dette etterpå
+};
+
 
 export type FAQItem = {
   question: LocalizedText;
@@ -165,6 +173,7 @@ export type FeatureFlags = {
   services: boolean;
   process: boolean;
   prices: boolean;
+  licenseClasses: boolean;
 
   // Valgfri CTA i Prices-seksjonen (lenke til full prisliste)
   fullPriceListCta: boolean;
@@ -220,6 +229,16 @@ processSection?: SectionText;
     fullPriceListCta?: LinkCTA;
   };
 
+
+  //  NY: Førerkortklasser
+  licenseClassesSection?: SectionText;
+  licenseClasses?: {
+    no: LicenseClassItem[];
+    en: LicenseClassItem[];
+  };
+
+
+
   // WHY US: innhold (heading/points/image). (Optional eyebrow/subtext støttes i type.)
   whyUs: WhyUs;
 
@@ -245,6 +264,7 @@ export const siteConfig: SiteConfig = {
     services: true,
     process: true,
     prices: true,
+    licenseClasses: true,
     fullPriceListCta: true,
 
     whyUs: true,
@@ -533,6 +553,83 @@ process: {
       },
     },
   ],
+  
+  licenseClassesSection: {
+  heading: { no: "Førerkortklasser", en: "License classes" },
+  subtext: {
+    no: "Vi tilbyr opplæring i flere førerkortklasser. Velg det som passer deg.",
+    en: "We offer training for multiple license classes. Choose what fits you.",
+  },
+},
+
+licenseClasses: {
+  no: [
+    {
+      code: "AM146 / AM147",
+      title: "Moped",
+      description: "Klasse AM146 og AM147",
+    },
+    {
+      code: "A / A1 / A2",
+      title: "Motorsykkel",
+      description: "Klasse A, A1 og A2",
+    },
+    {
+      code: "B",
+      title: "Personbil",
+      description: "Klasse B",
+    },
+    {
+      code: "C1 / C / CE",
+      title: "Lastebil",
+      description: "Klasse C1, C og CE",
+    },
+    {
+      code: "BE / B96",
+      title: "Førerkortutvidelse",
+      description: "Klasse BE og B96",
+    },
+    {
+      code: "Tilhenger",
+      title: "Tilhengeropplæring",
+      description: "Praktisk opplæring og rygging med tilhenger",
+    },
+  ],
+
+  en: [
+    {
+      code: "AM146 / AM147",
+      title: "Moped",
+      description: "Class AM146 and AM147",
+    },
+    {
+      code: "A / A1 / A2",
+      title: "Motorcycle",
+      description: "Class A, A1 and A2",
+    },
+    {
+      code: "B",
+      title: "Car",
+      description: "Class B",
+    },
+    {
+      code: "C1 / C / CE",
+      title: "Truck",
+      description: "Class C1, C and CE",
+    },
+    {
+      code: "BE / B96",
+      title: "License extension",
+      description: "Class BE and B96",
+    },
+    {
+      code: "Trailer",
+      title: "Trailer training",
+      description: "Hands-on training incl. reversing with a trailer",
+    },
+  ],
+},
+
 
   /**
    * WHY US
@@ -546,7 +643,7 @@ process: {
    *   2) alt skrevet som string i stedet for { no, en }
    *   3) manglende "no"/"en" nøkler
    *
-   * Denne strukturen matcher komponenten din direkte.
+   * Denne strukturen matcher komponenten direkte.
    */
   whyUs: {
     eyebrow: { no: "HVORFOR OSS", en: "WHY US" }, // valgfritt – komponenten kan ignorere
