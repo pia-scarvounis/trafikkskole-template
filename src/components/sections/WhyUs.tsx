@@ -1,4 +1,3 @@
-// src/components/sections/WhyUs.tsx
 "use client";
 
 import Image from "next/image";
@@ -6,29 +5,19 @@ import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function WhyUs() {
-  // Feature flag
   if (!siteConfig.features.whyUs) return null;
 
   const { lang } = useLanguage();
   const { whyUs } = siteConfig;
 
-  /**
-   * Vi normaliserer språk til nøklene som finnes i config.
-   * (Hvis lang f.eks. er "nb" eller "en-US", så faller vi trygt tilbake til "no".)
-   */
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
-  // Trygg image (kan mangle i config)
   const image = whyUs.image;
-
-  // Trygg heading (fallback)
   const heading = whyUs.heading?.[safeLang] ?? whyUs.heading?.no ?? "";
-
-  // Trygg liste: map() kan aldri kræsje
   const points = whyUs.points?.[safeLang] ?? whyUs.points?.no ?? [];
 
   return (
-    <section id="hvorfor-oss" className="py-24 bg-white">
+    <section id="hvorfor-oss" className="py-32 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           {/* Venstre: bilde */}
@@ -40,6 +29,7 @@ export default function WhyUs() {
                   alt={image.alt?.[safeLang] ?? image.alt?.no ?? "Why us"}
                   fill
                   className="object-cover"
+                  priority
                 />
               </div>
             </div>

@@ -36,6 +36,18 @@ export type LocalizedList = {
   en: string[];
 };
 
+// PROCESS: brukes når vi vil ha trekkspill (title + details per steg)
+export type ProcessStep = {
+  title: string;
+  details: string;
+};
+
+export type LocalizedProcess = {
+  no: ProcessStep[];
+  en: ProcessStep[];
+};
+
+
 // Gjenbrukbar seksjonstittel/intro for mal.
 // Kan brukes på tvers av seksjoner (Process, Prices, FAQ, Reviews, Services osv.)
 export type SectionText = {
@@ -67,12 +79,23 @@ export type CTA = {
 export type Service = {
   title: LocalizedText;
   description: LocalizedText;
+
+  // ✅ NYTT: prisfelt (valgfritt)
+  price?: LocalizedText;
+
+  // ✅ NYTT: punktliste (valgfritt)
+  bullets?: {
+    no: string[];
+    en: string[];
+  };
+
   cta: CTA;
   icon?: {
     src: string;
     alt: LocalizedText;
   };
 };
+
 
 export type PriceItem = {
   title: LocalizedText;
@@ -184,9 +207,12 @@ export type SiteConfig = {
 
   services: Service[];
 
-  // PROCESS: språksensitiv liste + seksjonstekster (mal-perfekt)
-  process: LocalizedList;
-  processSection?: SectionText;
+ 
+// PROCESS: språksensitiv liste + seksjonstekster (mal-perfekt)
+// (trekkspill: title + details)
+process: LocalizedProcess;
+processSection?: SectionText;
+
 
   // PRICES: prislinjer + seksjonstekster + valgfri CTA
   prices: PriceItem[];
@@ -278,84 +304,194 @@ export const siteConfig: SiteConfig = {
     },
   },
 
-  services: [
-    {
-      icon: {
-        src: "/icons/kjoretime.png",
-        alt: { no: "Kjøretimer", en: "Driving lessons" },
-      },
-      title: { no: "Kjøretimer", en: "Driving lessons" },
-      description: {
-        no: "Individuell opplæring tilpasset nivå og progresjon.",
-        en: "Individual training tailored to your level and progress.",
-      },
-      cta: {
-        label: { no: "Bestill kjøretime", en: "Book a lesson" },
-        href: "#kontakt",
-      },
+ services: [
+  {
+    title: {
+      no: "Startpakke – «Kom i gang»",
+      en: "Starter package – “Get started”",
     },
-    {
-      icon: {
-        src: "/icons/kurs.png",
-        alt: { no: "Kurs", en: "Courses" },
-      },
-      title: { no: "Obligatoriske kurs", en: "Mandatory courses" },
-      description: {
-        no: "Vi guider deg trygt gjennom alle kurs du må ha.",
-        en: "We guide you safely through all mandatory courses.",
-      },
-      cta: {
-        label: { no: "Se kurs", en: "View courses" },
-        href: "#kontakt",
-      },
+    description: {
+      no: "Perfekt for deg som vil teste skolen eller akkurat har begynt å øvelseskjøre.",
+      en: "Perfect if you want to try the school or have just started practicing driving.",
     },
-    {
-      icon: {
-        src: "/icons/forerprove.png",
-        alt: { no: "Førerprøve", en: "Driving test" },
-      },
-      title: { no: "Oppkjøringstrening", en: "Test preparation" },
-      description: {
-        no: "Forberedelse som gir trygghet på den store dagen.",
-        en: "Preparation that builds confidence for the big day.",
-      },
-      cta: {
-        label: { no: "Kontakt oss", en: "Contact us" },
-        href: "#kontakt",
-      },
+    price: {
+      no: "4 500 kr",
+      en: "4,500 NOK",
     },
-  ],
+    bullets: {
+      no: [
+        "3 x kjøretimer (45 min)",
+        "Trinnvurdering trinn 2",
+        "Uforpliktende rådgivning for videre løp",
+      ],
+      en: [
+        "3 x driving lessons (45 min)",
+        "Step 2 assessment",
+        "Non-binding guidance for further training",
+      ],
+    },
+    cta: {
+      label: { no: "Bestill startpakke", en: "Book starter package" },
+      href: "#kontakt",
+    },
+  },
+
+  {
+    title: {
+      no: "Komplett pakke – «Mest populær»",
+      en: "Complete package – “Most popular”",
+    },
+    description: {
+      no: "Designet for å gi eleven og foreldre forutsigbarhet. Denne dekker alt det obligatoriske.",
+      en: "Designed to give students and parents predictability. Covers all mandatory training.",
+    },
+    price: {
+      no: "21 900 kr",
+      en: "21,900 NOK",
+    },
+    bullets: {
+      no: [
+        "10 x kjøretimer (45 min)",
+        "Sikkerhetskurs på bane (inkl. baneleie)",
+        "Sikkerhetskurs på veg (langkjøring)",
+        "Trinnvurdering trinn 2 og 3",
+        "Leie av bil til oppkjøring",
+      ],
+      en: [
+        "10 x driving lessons (45 min)",
+        "Safety course on track (incl. track fee)",
+        "Safety course on road (long-distance driving)",
+        "Step 2 and 3 assessments",
+        "Car rental for driving test",
+      ],
+    },
+    cta: {
+      label: { no: "Velg komplett pakke", en: "Choose complete package" },
+      href: "#kontakt",
+    },
+  },
+
+  {
+    title: {
+      no: "Fleksible enkelttimer",
+      en: "Flexible single lessons",
+    },
+    description: {
+      no: "For deg som trenger mengdetrening eller vil finpusse formen før førerprøven.",
+      en: "For those who need extra practice or want to polish their skills before the driving test.",
+    },
+    price: {
+      no: "Fra 850 kr",
+      en: "From 850 NOK",
+    },
+    bullets: {
+      no: [
+        "Enkelttime (45 min): 850 kr",
+        "Dobbelttime (90 min): 1 700 kr",
+        "Leie av bil til oppkjøring: 2 500 kr",
+      ],
+      en: [
+        "Single lesson (45 min): 850 NOK",
+        "Double lesson (90 min): 1,700 NOK",
+        "Car rental for driving test: 2,500 NOK",
+      ],
+    },
+    cta: {
+      label: { no: "Bestill enkelttime", en: "Book single lesson" },
+      href: "#kontakt",
+    },
+  },
+],
+
 
   // PROCESS (mal-perfekt): både innhold og seksjonstekster i config
-  processSection: {
-    eyebrow: { no: "SLIK FUNGERER DET", en: "HOW IT WORKS" },
-    heading: { no: "En enkel prosess", en: "A simple process" },
-    subtext: {
-      no: "Vi tilpasser opplæringen til nivået ditt og sørger for trygg progresjon.",
-      en: "We tailor the training to your level and ensure safe progression.",
-    },
+// PROCESS (trekkspill): både innhold og seksjonstekster i config
+processSection: {
+  eyebrow: { no: "SLIK FUNGERER DET", en: "HOW IT WORKS" },
+  heading: { no: "En enkel prosess", en: "A simple process" },
+  subtext: {
+    no: "Vi tilpasser opplæringen til nivået ditt og sørger for trygg progresjon.",
+    en: "We tailor the training to your level and ensure safe progression.",
   },
+},
 
-  process: {
-    no: [
-      "Kontakt oss og avklar behov (manuell/automat, nivå)",
-      "Planlegg opplæringsløp (timeplan og mål)",
-      "Kjøretimer og progresjon (trening og veiledning)",
-      "Trinnvurderinger ved behov (sjekkpunkter underveis)",
-      "Obligatoriske kurs (når det passer i løpet)",
-      "Oppkjøringstrening (siste finpuss)",
-      "Førerprøve/oppkjøring",
-    ],
-    en: [
-      "Get in touch and clarify your needs (manual/automatic, level)",
-      "Create a training plan (schedule and goals)",
-      "Driving lessons and progress (practice and guidance)",
-      "Progress assessments as needed (checkpoints along the way)",
-      "Mandatory courses (when it fits your plan)",
-      "Test preparation (final polish)",
-      "Driving test",
-    ],
-  },
+process: {
+  no: [
+    {
+      title: "Kontakt oss og avklar behov",
+      details:
+        "Vi tar en kort prat og finner ut hva du trenger: manuell/automat, nivå, erfaring og mål. Deretter foreslår vi et passende opplegg.",
+    },
+    {
+      title: "Planlegg opplæringsløp",
+      details:
+        "Vi setter opp en plan med anbefalt rekkefølge på timer og kurs, og tilpasser etter timeplan, progresjon og hvor raskt du ønsker å bli klar.",
+    },
+    {
+      title: "Kjøretimer og progresjon",
+      details:
+        "Du får strukturert opplæring med tydelige mål for hver time. Vi bygger ferdigheter steg for steg og gir konkrete tilbakemeldinger underveis.",
+    },
+    {
+      title: "Trinnvurderinger ved behov",
+      details:
+        "Vi tar vurderinger underveis for å sjekke at du er klar for neste steg. Dette gir trygghet og gjør at du bruker timene effektivt.",
+    },
+    {
+      title: "Obligatoriske kurs",
+      details:
+        "Når timingen er riktig i løpet ditt, booker vi nødvendige kurs slik at det passer med progresjonen og planen din.",
+    },
+    {
+      title: "Oppkjøringstrening",
+      details:
+        "Mot slutten finpusser vi: kjøremønster, flyt, selvstendighet og typiske oppkjøringsruter. Du får tips til hva sensor ofte ser etter.",
+    },
+    {
+      title: "Førerprøve / oppkjøring",
+      details:
+        "Når du er klar, hjelper vi med siste forberedelser og gjennomgang. Målet er at du møter trygg, rolig og godt forberedt til prøven.",
+    },
+  ],
+  en: [
+    {
+      title: "Get in touch and clarify your needs",
+      details:
+        "We’ll briefly map your needs: manual/automatic, current level, experience and goals. Then we suggest a suitable plan.",
+    },
+    {
+      title: "Create a training plan",
+      details:
+        "We plan lessons and courses in the right order, adapted to your schedule, progress and how quickly you want to be ready.",
+    },
+    {
+      title: "Driving lessons and progress",
+      details:
+        "Structured lessons with clear goals each time. We build skills step by step and give concrete feedback along the way.",
+    },
+    {
+      title: "Progress assessments as needed",
+      details:
+        "We do checkpoints when needed to ensure you’re ready for the next step. This improves confidence and efficiency.",
+    },
+    {
+      title: "Mandatory courses",
+      details:
+        "When the timing is right, we book mandatory courses so they fit your learning progress and overall plan.",
+    },
+    {
+      title: "Test preparation",
+      details:
+        "Near the end we polish everything: flow, independence, common routes and what examiners typically look for.",
+    },
+    {
+      title: "Driving test",
+      details:
+        "When you’re ready, we help you with final preparations so you arrive calm, confident and well prepared.",
+    },
+  ],
+},
+
 
   // PRICES (mal-perfekt)
   pricesSection: {

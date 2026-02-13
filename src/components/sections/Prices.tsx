@@ -13,7 +13,6 @@ export default function Prices() {
   const prices = siteConfig.prices ?? [];
   const visiblePrices = showAll ? prices : prices.slice(0, 3);
 
-  // Seksjonstekster fra config med fallback
   const heading =
     siteConfig.pricesSection?.heading?.[lang] ??
     (lang === "no" ? "Priser" : "Prices");
@@ -32,7 +31,7 @@ export default function Prices() {
   return (
     <section
       id="priser"
-      className="relative py-28 overflow-hidden bg-[#EAF6F1]"
+      className="relative py-32 overflow-hidden bg-[#EAF6F1]"
     >
       {/* Diagonal topp */}
       <div
@@ -41,11 +40,10 @@ export default function Prices() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-  <span className="block text-xs tracking-widest uppercase text-gray-500">
-  {siteConfig.pricesSection?.eyebrow?.[lang] ?? (lang === "no" ? "PRISER" : "PRICES")}
-</span>
-
-
+        <span className="block text-xs tracking-widest uppercase text-gray-500">
+          {siteConfig.pricesSection?.eyebrow?.[lang] ??
+            (lang === "no" ? "PRISER" : "PRICES")}
+        </span>
 
         <h2 className="mt-2 text-3xl font-semibold text-gray-900">
           {heading}
@@ -55,7 +53,6 @@ export default function Prices() {
           {subtext}
         </p>
 
-        {/* Pris-boks */}
         <div className="mt-12 mb-12 rounded-2xl bg-white/80 backdrop-blur p-6 sm:p-8 text-left">
           <ul>
             {visiblePrices.map((item, index) => (
@@ -81,7 +78,6 @@ export default function Prices() {
             ))}
           </ul>
 
-          {/* Vis flere / færre */}
           {prices.length > 3 && (
             <button
               type="button"
@@ -98,7 +94,6 @@ export default function Prices() {
             </button>
           )}
 
-          {/* Full prisliste CTA */}
           {fullCta?.href && fullCta?.label && (
             <div className="mt-4">
               <a

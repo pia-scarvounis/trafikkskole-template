@@ -15,7 +15,7 @@ if (!siteConfig.features.faq) return null;
   }
 
   return (
-    <section id="faq" className="py-24 bg-white">
+    <section id="faq" className="py-28 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <p className="text-center text-xs font-semibold tracking-widest text-gray-500">
           FAQ
