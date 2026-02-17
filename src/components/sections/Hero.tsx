@@ -13,15 +13,23 @@ export default function Hero() {
   return (
     <section
       id="hero"
-     className="relative overflow-hidden pt-16 sm:pt-20 lg:pt-32 pb-24 bg-[var(--section-odd)]"
-
+      className="
+        relative
+        min-h-screen
+        flex items-center
+        overflow-hidden
+        pt-16 sm:pt-20 lg:pt-32
+        pb-24
+        bg-[var(--section-odd)]
+      "
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          
           {/* IMAGE FIRST on mobile, SECOND on desktop */}
           {hero.image && (
             <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-xl">
+              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[500px] overflow-hidden rounded-xl">
                 <Image
                   src={hero.image.src}
                   alt={hero.image.alt}
@@ -39,7 +47,9 @@ export default function Hero() {
               {hero.headline[lang]}
             </h1>
 
-            <p className="mt-4 text-lg text-gray-700">{hero.subtext[lang]}</p>
+            <p className="mt-4 text-lg text-gray-700">
+              {hero.subtext[lang]}
+            </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -60,7 +70,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Fade ned til neste seksjon (even/surface) */}
+      {/* Fade til neste seksjon */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--section-even)]"
