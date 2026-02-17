@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
 :root {
+  /* Base */
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Brand palette */
+  --brand: #0049ff;     /* blå */
+  --surface: #f6f7f9;   /* grå */
+  --white: #ffffff;
+
+  /* Section backgrounds (annenhver) */
+  --section-odd: var(--white);
+  --section-even: var(--surface);
 
   /* Typography */
   --text-lg: 1.5rem;
 }
+
 
 @theme inline {
   --color-background: var(--background);

@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
+import Section from "@/components/ui/Section";
 
 export default function LicenseClasses() {
   if (!siteConfig.features.licenseClasses) return null;
@@ -11,57 +13,84 @@ export default function LicenseClasses() {
 
   const section = siteConfig.licenseClassesSection;
   const classes = siteConfig.licenseClasses?.[safeLang] ?? [];
-
   if (classes.length === 0) return null;
 
-  const getIconLabel = (code: string) => {
-    const first = code.split(" ")[0];
-    return first.split("/")[0];
+  const iconMap: Record<string, string> = {
+    AM146: "/icons/moped.svg",
+    A: "/icons/motorsykkel.svg",
+    B: "/icons/personbil.svg",
+    C1: "/icons/lastebil.svg",
+    BE: "/icons/forerkortutvidelse.svg",
+    TGK: "/icons/trafikalt-grunnkurs.svg",
   };
 
+  const getPrimaryCode = (code: string) => code.split("/")[0].trim();
+
   return (
-    <section id="forerkortklasser" className="py-32 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Heading */}
+ <Section
+  id="forerkortklasser"
+  variant="odd"
+  topDiagonal={true}
+  bottomDiagonal={true}
+  topDiagonalDirection="ltr"
+  bottomDiagonalDirection="ltr"
+  topDiagonalBgVariant="even"       // bakgrunnen på seksjonen OVER
+  bottomDiagonalBgVariant="even"    // bakgrunnen på seksjonen UNDER (Prices)
+>
+
+
+      {/* Header */}
+      <div>
         <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
           {section?.heading?.[safeLang]}
         </h2>
 
-        {/* Subtext */}
         {section?.subtext?.[safeLang] && (
-          <p className="mt-4 text-sm text-gray-600 sm:text-base max-w-2xl">
+          <p className="mt-4 max-w-2xl text-sm text-gray-600 sm:text-base">
             {section.subtext[safeLang]}
           </p>
         )}
+      </div>
 
-        {/* Grid */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {classes.map((item) => (
+      {/* Grid */}
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {classes.map((item) => {
+          const primaryCode = getPrimaryCode(item.code);
+          const iconSrc = iconMap[primaryCode];
+
+          return (
             <div
               key={item.code}
-              className="flex items-center gap-4 rounded-2xl bg-[#F6F7F9] p-6 transition hover:shadow-sm"
+              className="flex items-center gap-4 rounded-2xl bg-white p-6 transition hover:shadow-sm border border-black/5"
             >
-              {/* Blå ikon-sirkel */}
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0049FF] text-white font-semibold text-xs">
-                <span className="truncate max-w-[42px]">
-                  {getIconLabel(item.code)}
-                </span>
+              {/* Icon */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand)]">
+                {iconSrc ? (
+                  <Image
+                    src={iconSrc}
+                    alt={item.title}
+                    width={26}
+                    height={26}
+                    className="h-6 w-6 object-contain"
+                  />
+                ) : (
+                  <span className="text-white font-semibold text-xs truncate max-w-[42px]">
+                    {primaryCode}
+                  </span>
+                )}
               </div>
 
-              {/* Tekst */}
+              {/* Text */}
               <div className="min-w-0">
-                <h3 className="font-semibold text-gray-900">
-                  {item.title}
-                </h3>
+                <h3 className="font-semibold text-gray-900">{item.title}</h3>
                 <p className="mt-1 text-sm text-gray-600 break-words">
                   {item.description}
                 </p>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

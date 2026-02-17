@@ -138,6 +138,22 @@ export type WhyUs = {
   };
 };
 
+export type Instructor = {
+  name: string;
+  title: LocalizedText;
+  image: string;
+  car?: string;
+  languages?: string[];
+};
+
+export type InstructorsSection = {
+  heading: LocalizedText;
+  subtext?: LocalizedText;
+  instructors: Instructor[];  
+};
+
+
+
 export type FooterConfig = {
   orgNumber: string;
   privacyHref: string;
@@ -174,6 +190,8 @@ export type FeatureFlags = {
   process: boolean;
   prices: boolean;
   licenseClasses: boolean;
+  instructors: boolean;
+
 
   // Valgfri CTA i Prices-seksjonen (lenke til full prisliste)
   fullPriceListCta: boolean;
@@ -195,7 +213,17 @@ export type SiteConfig = {
     phone: string;
     email: string;
     location: string;
+
+    // NYTT 
+    address?: LocalizedText;
+
+    // NYTT 
+    maps?: {
+      embedUrl?: string; // iframe-URL (Google maps embed)
+      link?: string;     // klikkbar lenke til maps
+    };
   };
+
 
   features: FeatureFlags;
 
@@ -238,9 +266,12 @@ processSection?: SectionText;
   };
 
 
-
   // WHY US: innhold (heading/points/image). (Optional eyebrow/subtext støttes i type.)
   whyUs: WhyUs;
+  
+// instructors 
+  instructorsSection?: InstructorsSection;
+
 
   // Reviews og FAQ
   reviews: Review[];
@@ -248,14 +279,26 @@ processSection?: SectionText;
 
   footer: FooterConfig;
 };
-
 export const siteConfig: SiteConfig = {
   brand: {
-    name: "Paulos trafikkskole",
+    name: "Din skole",
     phone: "99 99 99 99",
     email: "post@trafikkskole.no",
     location: "Oslo",
+
+    address: {
+      no: "Karl Johans gate 1, 0154 Oslo",
+      en: "Karl Johans gate 1, 0154 Oslo",
+    },
+
+    maps: {
+      embedUrl:
+        "https://www.google.com/maps?q=Karl%20Johans%20gate%201%2C%200154%20Oslo&output=embed",
+      link:
+        "https://www.google.com/maps?q=Karl%20Johans%20gate%201%2C%200154%20Oslo",
+    },
   },
+
 
   features: {
     languageSwitch: true,
@@ -268,6 +311,7 @@ export const siteConfig: SiteConfig = {
     fullPriceListCta: true,
 
     whyUs: true,
+    instructors: true,
     reviews: true,
     faq: true,
     contact: true,
@@ -280,15 +324,33 @@ export const siteConfig: SiteConfig = {
    * - WhyUs.tsx har: <section id="hvorfor-oss" ...>
    *   Derfor må href være "#hvorfor-oss" om du vil ha den i menyen.
    */
-  nav: [
-    { label: { no: "Tjenester", en: "Services" }, href: "#tjenester" },
-    { label: { no: "Prosess", en: "Process" }, href: "#prosess" },
-    { label: { no: "Priser", en: "Prices" }, href: "#priser" },
-    { label: { no: "Hvorfor oss", en: "Why us" }, href: "#hvorfor-oss" },
-    { label: { no: "Anmeldelser", en: "Reviews" }, href: "#anmeldelser" },
-    { label: { no: "FAQ", en: "FAQ" }, href: "#faq" },
-    { label: { no: "Kontakt", en: "Contact" }, href: "#kontakt" },
-  ],
+nav: [
+  {
+    href: "#tjenester",
+    label: { no: "Tjenester", en: "Services" },
+  },
+  {
+    href: "#forerkortklasser",
+    label: { no: "Førerkortklasser", en: "License classes" },
+  },
+  {
+    href: "#priser",
+    label: { no: "Priser", en: "Prices" },
+  },
+  {
+    href: "#prosess",
+    label: { no: "Prosess", en: "Process" },
+  },
+  {
+    href: "#anmeldelser",
+    label: { no: "Anmeldelser", en: "Reviews" },
+  },
+  {
+    href: "#faq",
+    label: { no: "FAQ", en: "FAQ" },
+  },
+],
+
 
   hero: {
     headline: {
@@ -527,32 +589,105 @@ process: {
     },
   },
 
-  prices: [
-    {
-      title: { no: "Kjøretime", en: "Driving lesson" },
-      price: { no: "Fra 850 kr", en: "From 850 NOK" },
-      description: {
-        no: "45 minutter med godkjent instruktør.",
-        en: "45 minutes with a certified instructor.",
-      },
+prices: [
+  {
+    title: { no: "Kjøretime (45 min)", en: "Driving lesson (45 min)" },
+    description: {
+      no: "Ordinær kjøretime",
+      en: "Standard driving lesson",
     },
-    {
-      title: { no: "Obligatoriske kurs", en: "Mandatory courses" },
-      price: { no: "Fra 2 000 kr", en: "From 2,000 NOK" },
-      description: {
-        no: "Pris varierer etter kurs og progresjon.",
-        en: "Price varies by course and progress.",
-      },
+    price: { no: "900 kr", en: "900 NOK" },
+  },
+  {
+    title: { no: "Trinnvurdering trinn 2", en: "Step assessment 2" },
+    description: {
+      no: "Obligatorisk vurdering",
+      en: "Mandatory assessment",
     },
-    {
-      title: { no: "Pakker", en: "Packages" },
-      price: { no: "Fra 8 000 kr", en: "From 8,000 NOK" },
-      description: {
-        no: "Samlet opplæring til en gunstigere pris.",
-        en: "Bundled training at a better overall price.",
-      },
+    price: { no: "1 100 kr", en: "1,100 NOK" },
+  },
+  {
+    title: { no: "Trinnvurdering trinn 3", en: "Step assessment 3" },
+    description: {
+      no: "Obligatorisk vurdering",
+      en: "Mandatory assessment",
     },
-  ],
+    price: { no: "1 200 kr", en: "1,200 NOK" },
+  },
+  {
+    title: { no: "Sikkerhetskurs på øvingsbane", en: "Safety course on track" },
+    description: {
+      no: "Obligatorisk glattkjøring",
+      en: "Mandatory skid training",
+    },
+    price: { no: "5 200 kr", en: "5,200 NOK" },
+  },
+  {
+    title: { no: "Sikkerhetskurs på vei", en: "Safety course on road" },
+    description: {
+      no: "Avsluttende kurs før oppkjøring",
+      en: "Final course before driving test",
+    },
+    price: { no: "7 900 kr", en: "7,900 NOK" },
+  },
+  {
+    title: { no: "Førerprøve (leie av bil)", en: "Driving test (car rental)" },
+    description: {
+      no: "Inkluderer klargjøring og oppvarmingstime",
+      en: "Includes preparation and warm-up lesson",
+    },
+    price: { no: "2 900 kr", en: "2,900 NOK" },
+  },
+  {
+    title: { no: "Trafikalt grunnkurs", en: "Basic traffic course" },
+    description: {
+      no: "Obligatorisk for nye elever",
+      en: "Mandatory for new students",
+    },
+    price: { no: "2 500 kr", en: "2,500 NOK" },
+  },
+  {
+    title: { no: "Førstehjelpskurs", en: "First aid course" },
+    description: {
+      no: "En del av trafikalt grunnkurs",
+      en: "Part of the basic traffic course",
+    },
+    price: { no: "800 kr", en: "800 NOK" },
+  },
+  {
+    title: { no: "Mørkekjøringsdemonstrasjon", en: "Night driving demonstration" },
+    description: {
+      no: "Obligatorisk for elever under 25 år",
+      en: "Mandatory for students under 25",
+    },
+    price: { no: "1 900 kr", en: "1,900 NOK" },
+  },
+  {
+    title: { no: "Lastesikringskurs (C1/C)", en: "Load securing course (C1/C)" },
+    description: {
+      no: "Obligatorisk for lastebil",
+      en: "Mandatory for truck license",
+    },
+    price: { no: "3 500 kr", en: "3,500 NOK" },
+  },
+  {
+    title: { no: "Utvidelse til BE", en: "Upgrade to BE" },
+    description: {
+      no: "Tilhengeropplæring klasse BE",
+      en: "Trailer training class BE",
+    },
+    price: { no: "4 900 kr", en: "4,900 NOK" },
+  },
+  {
+    title: { no: "Teorikurs klasse B", en: "Theory course class B" },
+    description: {
+      no: "Forberedelse til teoriprøve",
+      en: "Preparation for theory test",
+    },
+    price: { no: "1 200 kr", en: "1,200 NOK" },
+  },
+],
+
   
   licenseClassesSection: {
   heading: { no: "Førerkortklasser", en: "License classes" },
@@ -590,9 +725,9 @@ licenseClasses: {
       description: "Klasse BE og B96",
     },
     {
-      code: "Tilhenger",
-      title: "Tilhengeropplæring",
-      description: "Praktisk opplæring og rygging med tilhenger",
+      code: "TGK",
+      title: "Trafikalt grunnkurs",
+      description: "Grunnkurs for deg under 25 år",
     },
   ],
 
@@ -625,7 +760,7 @@ licenseClasses: {
     {
       code: "Trailer",
       title: "Trailer training",
-      description: "Hands-on training incl. reversing with a trailer",
+      description: "Hands-on training",
     },
   ],
 },
@@ -675,6 +810,50 @@ licenseClasses: {
       },
     },
   },
+
+instructorsSection: {
+  heading: {
+    no: "Våre kjørelærere",
+    en: "Our instructors",
+  },
+  subtext: {
+    no: "Erfarne og engasjerte lærere som følger deg hele veien.",
+    en: "Experienced and dedicated instructors who guide you all the way.",
+  },
+  instructors: [
+    {
+      name: "Sara Nordmann",
+      title: {
+        no: "Faglig leder",
+        en: "Academic manager",
+      },
+      image: "/images/ins1.png",
+      car: "Tesla Model 3 (Automat)",
+      languages: ["Norsk", "English"],
+    },
+    {
+      name: "Ali Rahman",
+      title: {
+        no: "Trafikklærer Klasse B / BE",
+        en: "Driving instructor Class B / BE",
+      },
+      image: "/images/ins2.png",
+      car: "Volvo XC40 (Automat)",
+      languages: ["Norsk", "English", "Tysk"],
+    },
+    {
+      name: "Lise Larsen",
+      title: {
+        no: "Teoriinstruktør",
+        en: "Theory instructor",
+      },
+      image: "/images/ins3.jpg",
+      car: "–",
+      languages: ["Norsk", "English"],
+    },
+  ],
+},
+
 
   reviews: [
     {
@@ -742,6 +921,8 @@ licenseClasses: {
       },
     },
   ],
+
+
 
   footer: {
     orgNumber: "999 999 999",

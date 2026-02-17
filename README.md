@@ -1,30 +1,36 @@
-Trafikkskole – nettsidemal (Next.js + Tailwind)
-
-Dette prosjektet er en gjenbrukbar nettsidemal for trafikkskoler, bygget med Next.js (App Router) og Tailwind CSS.
-
-Målet med malen er å gjøre det enkelt å:
-* selge og gjenbruke samme kodebase for flere kunder
-* tilpasse innhold uten å endre komponentkode
-* slå av/på funksjonalitet per kunde via konfigurasjon
-
-Teknologi
-* Next.js (App Router)
-* React
-* Tailwind CSS
-* TypeScript
-* Ingen backend i v1 (kontakt via mailto:)
-
-Kjerneprinsipper i malen
+Trafikkskole – nettsidemal
+Next.js + Tailwind
+Hva er dette?
+En gjenbrukbar nettsidemal for trafikkskoler.
+Bygget med:
+Next.js (App Router)
+React
+Tailwind CSS
+TypeScript
+Versjon 1 har ingen backend (kontakt via mailto:).
+Hensikt med malen
+Målet er å:
+Bruke samme kodebase for flere kunder
+Endre innhold uten å røre komponentkode
+Slå funksjoner av/på via konfigurasjon
+Struktur og arkitektur
 1. All kundetekst ligger i siteConfig
-All tekst som kunden skal kunne endre (overskrifter, beskrivelser, FAQ, priser osv.) ligger i:
+Fil:
 src/data/siteConfig.ts
-Komponentene renderer kun data – de inneholder ingen hardkodet kundetekst.
-
-Nye kunder trenger i praksis bare å:
-endre siteConfig.ts
-evt. slå av/på seksjoner via feature flags
-2. Feature flags – slå funksjoner av/på uten kodeendringer
-I siteConfig finnes et features-objekt:
+Her ligger:
+Overskrifter
+Tekster
+FAQ
+Priser
+Reviews
+Språkinnhold
+Komponentene renderer kun data.
+Ingen hardkodet kundetekst i komponentene.
+For ny kunde trenger man i praksis bare å:
+Endre siteConfig.ts
+Justere feature flags
+2. Feature flags
+I siteConfig finnes:
 features: {
   languageSwitch: true,
   hero: true,
@@ -34,98 +40,82 @@ features: {
   contact: true,
   footer: true,
 }
-Dette gjør det mulig å:
-skjule hele seksjoner (f.eks. reviews eller FAQ)
-tilby valgfrie funksjoner per kunde
-bruke samme kodebase for “enkle” og “avanserte” kunder
-Dette mønsteret brukes konsekvent i komponentene:
+Brukes slik i komponenter:
 if (!siteConfig.features.reviews) return null;
-
-Språkstøtte (Norsk / English)
-Mål
-Bygge et språkfundament som:
-er enkelt å gjenbruke i en mal
-kan skrus av/på per kunde
-ikke låser design eller arkitektur for tidlig
-
-1. Global språk-state med React Context
-Språk håndteres via en React Context:
+Dette gjør at:
+Seksjoner kan skjules uten å endre kode
+Samme mal kan brukes for enkle og avanserte kunder
+Styling-struktur (malvennlig)
+For å gjøre malen enklere å vedlikeholde er styling standardisert.
+Section-komponent
+Alle hovedseksjoner rendres gjennom:
+components/ui/Section.tsx
+Den støtter:
+variant="odd"
+variant="even"
+Dette gir kontrollert annenhver seksjonsbakgrunn.
+Globale CSS-variabler
+I:
+src/app/globals.css
+Defineres blant annet:
+--brand
+--surface
+--section-odd
+--section-even
+Dette gjør at:
+Farger kan endres ett sted
+Design kan justeres uten å endre komponentlogikk
+Malen blir mer skalerbar
+Språkstøtte (NO / EN)
+LanguageContext
+Fil:
 src/context/LanguageContext.tsx
-Contexten inneholder:
-lang ("no" | "en")
-setLang(...)
+Inneholder:
+lang
+setLang
 lagring i localStorage
-Hvorfor Context?
-Språk brukes i mange seksjoner (Hero, Services, FAQ, Contact osv.)
-Context unngår “prop drilling”
-localStorage gjør at valgt språk huskes mellom besøk
-Default språk er norsk ("no").
-
-2. Appen pakkes med LanguageProvider
-I src/app/layout.tsx:
+Appen pakkes i:
 <LanguageProvider>
   {children}
 </LanguageProvider>
-Dette gjør at hele applikasjonen har tilgang til språk-state.
-Vi bruker også:
+Default språk:
 <html lang="no">
-som fornuftig default for en norsk mal.
-
-  3. LanguageToggle – valgfri per kunde
-Språkvelgeren ligger i:
+LanguageToggle
+Fil:
 src/components/ui/LanguageToggle.tsx
-Den:
-Leser feature flag:
-if (!siteConfig.features.languageSwitch) return null;
-Bytter språk via setLang(...)
-Resultat:
-Kunden kan ha koden liggende klar
-men språkvelgeren vises kun hvis languageSwitch: true
+Vises kun hvis:
+siteConfig.features.languageSwitch === true
 Ingen separate kodebaser per kunde.
-
-4. Ingen automatisk oversettelse (bevisst valg)
-Alle tekster legges manuelt inn i siteConfig
-Ingen Google Translate / auto-oversettelse
+Ingen automatisk oversettelse
+All tekst legges manuelt i siteConfig.
 Dette gir:
-bedre språkkvalitet
-mindre juridisk risiko
-full kontroll per kunde
-Arkitekturen er den samme som brukes i profesjonelle løsninger.
-
-Seksjoner og mønstre
-
+Full kontroll
+Bedre kvalitet
+Ingen tredjepartsavhengigheter
+Seksjonsmønster
+Alle seksjoner følger samme prinsipp:
+Data fra siteConfig
+Feature flag
+Språk via useLanguage()
+Wrapper via Section
+Eksempel:
 FAQ
-Accordion-basert FAQ
-Kun ett spørsmål åpent om gangen (openIndex)
-Innhold fra siteConfig.faq
-Flerspråklig struktur:
+Accordion
+Ett spørsmål åpent om gangen
+Struktur:
 question: { no, en }
 answer: { no, en }
-Reviews (Anmeldelser)
-Innhold fra siteConfig.reviews
-Manuell stjernerating (★★★★★)
-Seksjonen bruker korrekt id="anmeldelser" for ankerscroll
-
-Why Us / Process / Prices / Contact
-Samme mønster:
-innhold i siteConfig
-feature flag
-språksensitiv tekst via useLanguage()
 Mobil først
-Alle seksjoner er bygget responsivt
-Majoriteten av brukere for slike sider er mobilbrukere
-Hamburger-meny brukes på mobil
-Desktop og mobil deler samme innholdsstruktur
-Kontakt
-Kontakt i v1:
+Designet er mobile-first.
+Responsive seksjoner
+Hamburger-meny på mobil
+Samme struktur desktop/mobil
+Kontakt (v1)
 Telefon (tel:)
 E-post (mailto:)
-Skjema som åpner e-postklient
-Dette gjør løsningen:
-enkel
-backend-fri
-lett å utvide senere (API, skjema, CRM)
-Struktur (kort)
+Skjema åpner e-postklient
+Backend kan legges til senere.
+Prosjektstruktur
 src/
   app/
   components/
@@ -134,20 +124,19 @@ src/
   context/
   data/
     siteConfig.ts
-
-Hvordan starte prosjektet lokalt
+Starte prosjektet lokalt
 npm install
 npm run dev
-Videre arbeid (valgfritt)
-SEO-forbedringer
-Ekte kontaktskjema (API)
-URL-baserte språk (/en)
-Logo/branding per kunde
+Mulig videreutvikling
+SEO
+API-basert kontaktskjema
+URL-basert språk (/en)
+Branding per kunde
 Publisering som kommersiell mal
-Oppsummering
-Denne malen er bygget for:
-gjenbruk
-fleksibilitet
-kontroll
-profesjonell videreutvikling
-Nye kunder = endre siteConfig, ikke kode.
+Kort oppsummert
+Denne malen er laget for:
+Gjenbruk
+Kontroll
+Fleksibilitet
+Enkelt vedlikehold
+Ny kunde = endre siteConfig, ikke komponentene.

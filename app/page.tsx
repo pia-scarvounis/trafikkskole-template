@@ -5,6 +5,7 @@ import Process from "@/components/sections/Process";
 import Prices from "@/components/sections/Prices";
 import LicenseClasses from "@/components/sections/LicenseClasses";
 import WhyUs from "@/components/sections/WhyUs";
+import Instructors from "@/components/sections/Instructors";
 import Reviews from "@/components/sections/Reviews";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
@@ -14,17 +15,19 @@ export default function Home() {
   return (
     <main>
       <div id="top" /> 
-      <Header />
-      <Hero />
-      <Services />
-       <Prices />
-       <LicenseClasses />
-      <Process />
-      <WhyUs />
-      <Reviews />
-      <FAQ />
-      <Contact />
-      <Footer />
+    <Header />
+<Hero />
+<Services />
+<LicenseClasses />
+<Prices />
+<Instructors />
+<Process />
+<WhyUs />
+<Reviews />
+<FAQ />
+<Contact />
+<Footer />
+
     </main>
   );
 }

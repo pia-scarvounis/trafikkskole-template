@@ -1,8 +1,8 @@
-// src/components/sections/Contact.tsx
 "use client";
 
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
+import Section from "@/components/ui/Section";
 
 export default function Contact() {
   if (!siteConfig.features.contact) return null;
@@ -11,66 +11,105 @@ export default function Contact() {
   const { lang } = useLanguage();
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
-  return (
-    <section id="kontakt" className="bg-[#EAF6F1] py-28">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
-        {/* Eyebrow */}
-        <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">
-          {safeLang === "no" ? "Kontakt" : "Contact"}
-        </p>
+  const phoneHref = `tel:${brand.phone.replace(/\s/g, "")}`;
+  const mailHref = `mailto:${brand.email}`;
 
-        {/* Heading */}
-        <h2 className="mt-2 text-3xl font-semibold text-gray-900 sm:text-4xl">
-          {contact.heading[safeLang]}
-        </h2>
+  const mapEmbedUrl = brand.maps?.embedUrl;
+  const mapsLink = brand.maps?.link;
 
-        {/* Subtext */}
-        <p className="mt-4 text-gray-600">{contact.subtext[safeLang]}</p>
+ return (
+  <Section id="kontakt" variant="even">
+    {/* Gjør Contact bredere enn standard section-container */}
+    <div className="mx-auto w-full max-w-7xl">
+      <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+        {/* =========================
+            VENSTRE: Toppinfo + Kart
+           ========================= */}
+        <div>
+          <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase">
+            {safeLang === "no" ? "Kontakt" : "Contact"}
+          </p>
 
-        {/* Kontaktinfo */}
-        <div className="mt-8 space-y-2 text-gray-800">
-          <p>
-            <strong>Telefon:</strong>{" "}
-            <a
-              href={`tel:${brand.phone.replace(/\s/g, "")}`}
-              className="underline underline-offset-4"
-            >
-              {brand.phone}
-            </a>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+            {contact.heading[safeLang]}
+          </h2>
+
+          <p className="mt-4 max-w-2xl text-sm text-gray-600 sm:text-base">
+            {contact.subtext[safeLang]}
           </p>
-          <p>
-            <strong>E-post:</strong>{" "}
-            <a
-              href={`mailto:${brand.email}`}
-              className="underline underline-offset-4"
-            >
-              {brand.email}
-            </a>
-          </p>
-          <p>
-            <strong>Sted:</strong> {brand.location}
-          </p>
+
+          <div className="mt-8 space-y-2 text-gray-800">
+            <p>
+              <strong>{safeLang === "no" ? "Telefon:" : "Phone:"}</strong>{" "}
+              <a href={phoneHref} className="underline underline-offset-4">
+                {brand.phone}
+              </a>
+            </p>
+
+            <p>
+              <strong>{safeLang === "no" ? "E-post:" : "Email:"}</strong>{" "}
+              <a href={mailHref} className="underline underline-offset-4">
+                {brand.email}
+              </a>
+            </p>
+
+            <p>
+              <strong>{safeLang === "no" ? "Sted:" : "Location:"}</strong>{" "}
+              {brand.address?.[safeLang] ?? brand.location}
+            </p>
+          </div>
+
+          {/* Kart-kort */}
+          <div className="mt-10 rounded-2xl bg-white border border-black/5 overflow-hidden shadow-[0_10px_30px_-20px_rgba(0,0,0,0.25)]">
+            <div className="p-5 border-b border-black/5">
+              <p className="text-sm font-semibold text-gray-900">
+                {safeLang === "no" ? "Finn oss" : "Find us"}
+              </p>
+
+              <p className="mt-1 text-sm text-gray-600">
+                {brand.address?.[safeLang] ?? brand.location}
+              </p>
+
+              {mapsLink && (
+                <a
+                  href={mapsLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-flex text-sm font-medium text-[var(--brand)] hover:underline"
+                >
+                  {safeLang === "no"
+                    ? "Åpne i Google Maps"
+                    : "Open in Google Maps"}{" "}
+                  →
+                </a>
+              )}
+            </div>
+
+            {mapEmbedUrl ? (
+              <div className="relative w-full h-[360px]">
+                <iframe
+                  title={safeLang === "no" ? "Kart" : "Map"}
+                  src={mapEmbedUrl}
+                  className="absolute inset-0 h-full w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            ) : (
+              <div className="p-6 text-sm text-gray-600">
+                {safeLang === "no"
+                  ? "Kart er ikke satt opp ennå (mangler brand.maps.embedUrl)."
+                  : "Map is not set up yet (missing brand.maps.embedUrl)."}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* CTA-knapper (mobil: stack, desktop: på linje) */}
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
-          <a
-            href={`tel:${brand.phone.replace(/\s/g, "")}`}
-            className="w-full sm:w-auto text-center rounded-full bg-gray-900 px-6 py-2 text-sm font-medium text-white hover:bg-gray-800"
-          >
-            {safeLang === "no" ? "Ring oss" : "Call us"}
-          </a>
-
-          <a
-            href={`mailto:${brand.email}`}
-            className="w-full sm:w-auto text-center rounded-full border border-gray-400 px-6 py-2 text-sm font-medium text-gray-900 hover:bg-white"
-          >
-            {safeLang === "no" ? "Send e-post" : "Send email"}
-          </a>
-        </div>
-
-        {/* Skjema */}
-        <div className="mt-14">
+        {/* =========================
+            HØYRE: Skjema
+            ✅ Flyttes ned på desktop for å starte på linje med kartet
+           ========================= */}
+        <div className="lg:mt-[190px] rounded-2xl bg-white border border-black/5 p-8 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.25)]">
           <h3 className="text-xl font-semibold text-gray-900">
             {safeLang === "no" ? "Send oss en melding" : "Send us a message"}
           </h3>
@@ -82,47 +121,59 @@ export default function Contact() {
           </p>
 
           <form
-            className="mt-6 grid max-w-lg gap-4"
-            action={`mailto:${brand.email}`}
+            className="mt-6 grid gap-5"
+            action={mailHref}
             method="post"
             encType="text/plain"
           >
-            <label className="text-sm">
+            <label className="text-sm text-gray-900">
               {safeLang === "no" ? "Navn" : "Name"}
               <input
-                name="Navn"
+                name={safeLang === "no" ? "Navn" : "Name"}
                 type="text"
-                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-black/15 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand)]"
               />
             </label>
 
-            <label className="text-sm">
+            <label className="text-sm text-gray-900">
               {safeLang === "no" ? "Telefon" : "Phone"}
               <input
-                name="Telefon"
+                name={safeLang === "no" ? "Telefon" : "Phone"}
                 type="text"
-                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-black/15 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand)]"
               />
             </label>
 
-            <label className="text-sm">
+            <label className="text-sm text-gray-900">
+              {safeLang === "no" ? "E-post" : "Email"}
+              <input
+                name={safeLang === "no" ? "E-post" : "Email"}
+                type="email"
+                className="mt-1 w-full rounded-md border border-black/15 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand)]"
+              />
+            </label>
+
+            <label className="text-sm text-gray-900">
               {safeLang === "no" ? "Melding" : "Message"}
               <textarea
-                name="Melding"
-                rows={4}
-                className="mt-1 w-full rounded-md border border-gray-400 px-3 py-2"
+                name={safeLang === "no" ? "Melding" : "Message"}
+                rows={6}
+                className="mt-1 w-full rounded-md border border-black/15 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brand)]"
               />
             </label>
 
             <button
               type="submit"
-              className="mt-4 w-full sm:w-auto rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-gray-800"
+              className="mt-2 w-full rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-medium text-white hover:opacity-90 transition"
             >
               {safeLang === "no" ? "Send melding" : "Send message"}
             </button>
           </form>
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </Section>
+);
+
+ 
 }
