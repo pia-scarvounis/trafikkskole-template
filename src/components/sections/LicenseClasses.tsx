@@ -24,21 +24,34 @@ export default function LicenseClasses() {
     TGK: "/icons/trafikalt-grunnkurs.svg",
   };
 
-  const getPrimaryCode = (code: string) => code.split("/")[0].trim();
+  // Normaliserer + tar første del før "/"
+  const getPrimaryCode = (code: string) =>
+    code.split("/")[0].trim().toUpperCase();
+
+  // Robust ikonvalg: TGK skal aldri falle tilbake til f.eks. B-ikon
+  const getIconSrc = (item: { code: string; title: string }) => {
+    const primaryCode = getPrimaryCode(item.code);
+    const combined = `${item.code} ${item.title}`.toLowerCase();
+
+    // Hvis teksten indikerer TGK -> bruk TGK-ikon uansett
+    if (combined.includes("tgk") || combined.includes("trafikalt")) {
+      return iconMap.TGK;
+    }
+
+    return iconMap[primaryCode];
+  };
 
   return (
- <Section
-  id="forerkortklasser"
-  variant="odd"
-  topDiagonal={true}
-  bottomDiagonal={true}
-  topDiagonalDirection="ltr"
-  bottomDiagonalDirection="ltr"
-  topDiagonalBgVariant="even"       // bakgrunnen på seksjonen OVER
-  bottomDiagonalBgVariant="even"    // bakgrunnen på seksjonen UNDER (Prices)
->
-
-
+    <Section
+      id="forerkortklasser"
+      variant="odd"
+      topDiagonal={true}
+      bottomDiagonal={true}
+      topDiagonalDirection="ltr"
+      bottomDiagonalDirection="ltr"
+      topDiagonalBgVariant="even"
+      bottomDiagonalBgVariant="even"
+    >
       {/* Header */}
       <div>
         <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
@@ -56,7 +69,7 @@ export default function LicenseClasses() {
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {classes.map((item) => {
           const primaryCode = getPrimaryCode(item.code);
-          const iconSrc = iconMap[primaryCode];
+          const iconSrc = getIconSrc(item);
 
           return (
             <div
@@ -64,14 +77,14 @@ export default function LicenseClasses() {
               className="flex items-center gap-4 rounded-2xl bg-white p-6 transition hover:shadow-sm border border-black/5"
             >
               {/* Icon */}
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand)]">
+              <div className="flex items-center justify-center rounded-full bg-[var(--brand)] h-[calc(var(--spacing)*18)] w-[calc(var(--spacing)*18)]">
                 {iconSrc ? (
                   <Image
                     src={iconSrc}
                     alt={item.title}
-                    width={26}
-                    height={26}
-                    className="h-6 w-6 object-contain"
+                    width={40}
+                    height={40}
+                    className="object-contain h-[calc(var(--spacing)*10)] w-[calc(var(--spacing)*10)]"
                   />
                 ) : (
                   <span className="text-white font-semibold text-xs truncate max-w-[42px]">

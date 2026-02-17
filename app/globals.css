@@ -18,6 +18,10 @@
   --text-lg: 1.5rem;
 }
 
+/* Viktig: tving “light” så OS dark mode ikke påvirker forms/scrollbars */
+html {
+  color-scheme: light;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -26,13 +30,6 @@
   /* Use Inter as default sans font */
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

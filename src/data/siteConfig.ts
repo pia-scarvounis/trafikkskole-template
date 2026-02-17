@@ -758,9 +758,10 @@ licenseClasses: {
       description: "Class BE and B96",
     },
     {
-      code: "Trailer",
-      title: "Trailer training",
-      description: "Hands-on training",
+     code: "TGK",
+title: "Traffic Safety Course",
+description: "Mandatory basic traffic training."
+
     },
   ],
 },
