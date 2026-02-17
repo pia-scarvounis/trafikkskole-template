@@ -4,6 +4,7 @@ import { siteConfig } from "@/data/siteConfig";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Services() {
   if (!siteConfig.features.services) return null;
@@ -22,9 +23,11 @@ export default function Services() {
     >
       {/* Header */}
       <div>
-        <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-          {lang === "no" ? "Våre tjenester" : "Our services"}
-        </h2>
+        <Reveal variant="heading">
+          <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+            {lang === "no" ? "Våre tjenester" : "Our services"}
+          </h2>
+        </Reveal>
 
         <p className="mt-4 max-w-2xl text-sm text-gray-600 sm:text-base">
           {lang === "no"

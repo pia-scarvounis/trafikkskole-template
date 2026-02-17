@@ -4,11 +4,12 @@ import { useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 export default function FAQ() {
   if (!siteConfig.features.faq) return null;
 
- const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { lang } = useLanguage();
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
@@ -25,11 +26,14 @@ export default function FAQ() {
           FAQ
         </p>
 
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-          {safeLang === "no"
-            ? "Ofte stilte spørsmål"
-            : "Frequently Asked Questions"}
-        </h2>
+        {/* 🔥 Overskrift med reveal (lik de andre) */}
+        <Reveal variant="heading">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+            {safeLang === "no"
+              ? "Ofte stilte spørsmål"
+              : "Frequently Asked Questions"}
+          </h2>
+        </Reveal>
 
         <p className="mt-4 text-sm text-gray-600 sm:text-base">
           {safeLang === "no"

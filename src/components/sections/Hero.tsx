@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Hero() {
   if (!siteConfig.features.hero) return null;
@@ -25,11 +26,10 @@ export default function Hero() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          
           {/* IMAGE FIRST on mobile, SECOND on desktop */}
           {hero.image && (
             <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[500px] overflow-hidden rounded-xl">
+              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[500px] overflow-hidden rounded-xl hero-image-enter">
                 <Image
                   src={hero.image.src}
                   alt={hero.image.alt}
@@ -43,13 +43,14 @@ export default function Hero() {
 
           {/* TEXT SECOND on mobile, FIRST on desktop */}
           <div className="order-2 lg:order-1">
-            <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-              {hero.headline[lang]}
-            </h1>
+            <Reveal variant="heading" rootMargin="0px 0px 0px 0px" delayMs={80}>
+              <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+                {hero.headline[lang]}
+              </h1>
+            </Reveal>
 
-            <p className="mt-4 text-lg text-gray-700">
-              {hero.subtext[lang]}
-            </p>
+            {/* Subtext er uendret (ingen reveal) */}
+            <p className="mt-4 text-lg text-gray-700">{hero.subtext[lang]}</p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a

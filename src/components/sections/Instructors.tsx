@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Instructors() {
   // Dersom seksjonen ikke finnes i config → ikke render
@@ -33,9 +34,11 @@ export default function Instructors() {
       bottomDiagonalBgVariant="even" // fargen til neste seksjon (bytt hvis neste er noe annet)
     >
       {/* Heading */}
-      <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-        {section.heading[safeLang]}
-      </h2>
+      <Reveal variant="heading">
+        <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+          {section.heading[safeLang]}
+        </h2>
+      </Reveal>
 
       {/* Subtext */}
       {section.subtext?.[safeLang] && (

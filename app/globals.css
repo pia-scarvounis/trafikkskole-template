@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
+/* =========================================================
+   1) Design tokens / vars
+   ========================================================= */
 :root {
   /* Base */
   --background: #ffffff;
   --foreground: #171717;
 
   /* Brand palette */
-  --brand: #0049ff;     /* blå */
-  --surface: #f6f7f9;   /* grå */
+  --brand: #0049ff; /* blå */
+  --surface: #f6f7f9; /* grå */
   --white: #ffffff;
 
   /* Section backgrounds (annenhver) */
@@ -42,3 +45,96 @@ body {
   font-size: var(--text-lg);
   font-weight: 500;
 }
+
+/* =========================================================
+   2) Motion safety
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-enter,
+  .reveal,
+  .reveal--heading,
+  .reveal-image-left {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* =========================================================
+   3) Hero image: slide-in on desktop (runs on load)
+   ========================================================= */
+@keyframes heroSlideInSoft {
+  from {
+    opacity: 0;
+    transform: translate3d(60px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Kun desktop */
+@media (min-width: 1024px) {
+  .hero-image-enter {
+    animation: heroSlideInSoft 1200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 120ms;
+    will-change: transform, opacity;
+  }
+}
+
+/* =========================================================
+   4) Scroll reveal: headings (used by <Reveal variant="heading">)
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal--heading {
+  transform: translate3d(0, 18px, 0);
+  transition-duration: 900ms;
+}
+
+/* WhyUs image: scroll reveal from left (desktop only)
+   Gjør den mer spesifikk: .reveal.reveal-image-left
+   -> overstyrer .reveal sin transform helt sikkert */
+@media (min-width: 1024px) {
+  .reveal.reveal-image-left {
+    opacity: 0;
+    transform: translate3d(-320px, 0, 0);
+    filter: blur(6px);
+    transition:
+      opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity, filter;
+  }
+
+  .reveal.reveal-image-left.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+/* Mobil: ingen animasjon (stabilt) */
+@media (max-width: 1023px) {
+  .reveal.reveal-image-left {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+

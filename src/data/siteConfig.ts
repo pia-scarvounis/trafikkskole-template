@@ -577,12 +577,12 @@ process: {
 
   // PRICES (mal-perfekt)
   pricesSection: {
-    eyebrow: { no: "PRISLISTE", en: "PRICE LIST" },
     heading: { no: "Priser", en: "Prices" },
-    subtext: {
-      no: "Oversikt over våre mest brukte tjenester og kurs.",
-      en: "An overview of our most common services and courses.",
-    },
+   subtext: {
+  no: "Her finner du en oversikt over priser på våre mest brukte tjenester og kurs.",
+  en: "Here you’ll find an overview of prices for our most common services and courses.",
+},
+
     fullPriceListCta: {
       label: { no: "Se full prisliste", en: "View full price list" },
       href: "/prisliste",

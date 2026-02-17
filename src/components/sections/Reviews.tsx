@@ -4,6 +4,7 @@
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 function Stars({ lang }: { lang: "no" | "en" }) {
   return (
@@ -27,20 +28,28 @@ export default function Reviews() {
 
   return (
     <Section id="anmeldelser" variant="even">
+      {/* Eyebrow */}
       <p className="text-center text-xs font-semibold tracking-widest text-gray-500">
         {safeLang === "no" ? "ANMELDELSER" : "TESTIMONIALS"}
       </p>
 
-      <h2 className="mt-3 text-center text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-        {safeLang === "no" ? "Hva kundene våre sier" : "Customer testimonials"}
-      </h2>
+      {/* 🔥 Overskrift med reveal (lik de andre) */}
+      <Reveal variant="heading">
+        <h2 className="mt-3 text-center text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+          {safeLang === "no"
+            ? "Hva kundene våre sier"
+            : "Customer testimonials"}
+        </h2>
+      </Reveal>
 
+      {/* Subtext */}
       <p className="mt-4 text-center text-sm text-gray-600 sm:text-base">
         {safeLang === "no"
           ? "Hva tidligere elever sier om oss"
           : "What former students say about us"}
       </p>
 
+      {/* Cards */}
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {reviews.map((review, index) => (
           <div

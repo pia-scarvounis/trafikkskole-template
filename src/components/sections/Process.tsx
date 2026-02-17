@@ -4,6 +4,7 @@ import { useState } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Process() {
   if (!siteConfig.features.process) return null;
@@ -18,16 +19,16 @@ export default function Process() {
 
   const eyebrow = section?.eyebrow?.[safeLang];
   const heading =
-    section?.heading?.[safeLang] ?? (safeLang === "no" ? "Slik fungerer det" : "How it works");
+    section?.heading?.[safeLang] ??
+    (safeLang === "no" ? "Slik fungerer det" : "How it works");
   const subtext =
     section?.subtext?.[safeLang] ??
     (safeLang === "no"
       ? "Her er en enkel oversikt over de vanligste stegene på veien mot førerkortet."
       : "Here is a simple overview of the most common steps on the way to getting your driver’s license.");
 
-  // Åpne/lukke trekkspill
-const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+  // Åpne/lukke trekkspill (starter lukket)
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <Section id="prosess" variant="even">
@@ -37,9 +38,11 @@ const [openIndex, setOpenIndex] = useState<number | null>(null);
         </p>
       )}
 
-      <h2 className="mt-3 text-center text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-        {heading}
-      </h2>
+      <Reveal variant="heading">
+        <h2 className="mt-3 text-center text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+          {heading}
+        </h2>
+      </Reveal>
 
       {subtext && (
         <p className="mt-4 text-center text-sm text-gray-600 sm:text-base max-w-2xl mx-auto">
@@ -59,7 +62,9 @@ const [openIndex, setOpenIndex] = useState<number | null>(null);
               {/* Header (klikkbar) */}
               <button
                 type="button"
-                onClick={() => setOpenIndex((prev) => (prev === index ? null : index))}
+                onClick={() =>
+                  setOpenIndex((prev) => (prev === index ? null : index))
+                }
                 className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
               >
                 <div className="flex items-start gap-3 min-w-0">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 
 export default function LicenseClasses() {
   if (!siteConfig.features.licenseClasses) return null;
@@ -24,16 +25,13 @@ export default function LicenseClasses() {
     TGK: "/icons/trafikalt-grunnkurs.svg",
   };
 
-  // Normaliserer + tar første del før "/"
   const getPrimaryCode = (code: string) =>
     code.split("/")[0].trim().toUpperCase();
 
-  // Robust ikonvalg: TGK skal aldri falle tilbake til f.eks. B-ikon
   const getIconSrc = (item: { code: string; title: string }) => {
     const primaryCode = getPrimaryCode(item.code);
     const combined = `${item.code} ${item.title}`.toLowerCase();
 
-    // Hvis teksten indikerer TGK -> bruk TGK-ikon uansett
     if (combined.includes("tgk") || combined.includes("trafikalt")) {
       return iconMap.TGK;
     }
@@ -54,9 +52,11 @@ export default function LicenseClasses() {
     >
       {/* Header */}
       <div>
-        <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-          {section?.heading?.[safeLang]}
-        </h2>
+        <Reveal variant="heading">
+          <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
+            {section?.heading?.[safeLang]}
+          </h2>
+        </Reveal>
 
         {section?.subtext?.[safeLang] && (
           <p className="mt-4 max-w-2xl text-sm text-gray-600 sm:text-base">
