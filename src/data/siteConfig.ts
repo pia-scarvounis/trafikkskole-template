@@ -156,9 +156,15 @@ export type InstructorsSection = {
 
 export type FooterConfig = {
   orgNumber: string;
-  privacyHref: string;
+
   privacyLabel: LocalizedText;
   orgLabel: LocalizedText;
+
+  // NYTT: Popup-innholdet
+  privacy: {
+    title: LocalizedText;
+    paragraphs: LocalizedList; // { no: string[], en: string[] }
+  };
 
   /**
    * Valgfri “credit” i footer.
@@ -170,6 +176,7 @@ export type FooterConfig = {
     href: string;
   };
 };
+
 
 export type HeroImage = {
   src: string;
@@ -925,16 +932,30 @@ instructorsSection: {
 
 
 
-  footer: {
-    orgNumber: "999 999 999",
-    privacyHref: "/personvern",
-    privacyLabel: { no: "Personvern", en: "Privacy" },
-    orgLabel: { no: "Org.nr", en: "Org. no." },
+footer: {
+  orgNumber: "999 999 999",
+  privacyLabel: { no: "Personvern", en: "Privacy" },
+  orgLabel: { no: "Org.nr", en: "Org. no." },
 
-    // Valgfritt: kan fjernes for white-label
-    credit: {
-      label: "Design by Drist",
-      href: "https://www.drist.no",
+  privacy: {
+    title: { no: "Personvernerklæring", en: "Privacy policy" },
+    paragraphs: {
+      no: [
+        "HER limer vi inn personverntekst.",
+        "Del den opp i avsnitt – ett avsnitt per string.",
+        "Legg gjerne til kontaktinfo, lagringstid og rettigheter.",
+      ],
+      en: [
+        "Paste your existing privacy text here.",
+        "Split into paragraphs – one paragraph per string.",
+      ],
     },
   },
+
+  credit: {
+    label: "Design by Drist",
+    href: "https://www.drist.no",
+  },
+},
+
 };

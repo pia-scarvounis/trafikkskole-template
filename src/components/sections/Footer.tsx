@@ -1,6 +1,6 @@
-// src/components/sections/Footer.tsx
 "use client";
 
+import { useState, useEffect } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -11,66 +11,155 @@ export default function Footer() {
   const { lang } = useLanguage();
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+
+  // ESC + scroll-lock når popup er åpen
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPrivacyOpen(false);
+    };
+
+    if (privacyOpen) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKey);
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [privacyOpen]);
+
+  // Safety: hvis config mangler privacy-innhold, ikke krasj
+  const privacyTitle =
+    footer.privacy?.title?.[safeLang] ??
+    (safeLang === "no" ? "Personvernerklæring" : "Privacy policy");
+
+  const privacyParagraphs = footer.privacy?.paragraphs?.[safeLang] ?? [];
+
   return (
-    <footer className="bg-[#F4F6F6] border-t border-black/10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
-          {/* Venstre */}
-          <div className="space-y-3">
-            <div className="text-sm text-gray-800">
-              <span className="font-semibold">{brand.name}</span>
-              <span className="text-gray-500"> · </span>
-              <span className="text-gray-600">© {new Date().getFullYear()}</span>
+    <>
+      <footer className="relative bg-gradient-to-b from-white to-[#EEF2F2] border-t border-black/5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
+          {/* MAIN GRID */}
+          <div className="grid gap-10 sm:grid-cols-3">
+            {/* COLUMN 1 – Brand */}
+            <div className="space-y-4">
+              <div className="text-lg font-semibold text-gray-900">
+                {brand.name}
+              </div>
+
+              <p className="text-sm text-gray-600 leading-relaxed max-w-xs">
+                {safeLang === "no"
+                  ? "En moderne trafikkskole med fokus på trygg, effektiv og personlig opplæring."
+                  : "A modern driving school focused on safe, efficient and personal training."}
+              </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center rounded-full border border-black/10 bg-white px-3 py-1 text-xs text-gray-700">
-                {footer.orgLabel[safeLang]}:
-                <span className="ml-1 font-medium text-gray-900">
-                  {footer.orgNumber}
+            {/* COLUMN 2 – Info */}
+            <div className="space-y-4">
+              <div className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                {safeLang === "no" ? "Informasjon" : "Information"}
+              </div>
+
+              <div className="flex flex-col gap-3 text-sm text-gray-600">
+                <span>
+                  {footer.orgLabel[safeLang]}:{" "}
+                  <span className="font-medium text-gray-900">
+                    {footer.orgNumber}
+                  </span>
                 </span>
-              </span>
 
-              <span className="text-xs text-gray-600">{brand.location}</span>
+                <span>{brand.location}</span>
+
+                {/* Personvern → popup (ikke link) */}
+                <button
+                  type="button"
+                  onClick={() => setPrivacyOpen(true)}
+                  className="text-left hover:text-black transition-colors"
+                >
+                  {footer.privacyLabel[safeLang]}
+                </button>
+              </div>
+            </div>
+
+            {/* COLUMN 3 – Actions */}
+            <div className="space-y-4">
+              <div className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                {safeLang === "no" ? "Navigasjon" : "Navigation"}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="inline-flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-black transition"
+              >
+                ↑ {safeLang === "no" ? "Til toppen" : "Back to top"}
+              </button>
             </div>
           </div>
 
-          {/* Høyre */}
-          <div className="flex items-center gap-6">
-            <a
-              href={footer.privacyHref}
-              className="text-sm font-medium text-gray-900 underline underline-offset-4 hover:text-black"
-            >
-              {footer.privacyLabel[safeLang]}
-            </a>
+          {/* DIVIDER */}
+          <div className="mt-12 border-t border-black/5 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-gray-500 gap-3">
+            <span>
+              © {new Date().getFullYear()} {brand.name}
+            </span>
 
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">
-              {safeLang === "no" ? "Til toppen" : "Back to top"}
-            </a>
+            {footer.credit?.href && footer.credit?.label && (
+              <a
+                href={footer.credit.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-900 underline underline-offset-4"
+              >
+                {footer.credit.label}
+              </a>
+            )}
           </div>
         </div>
+      </footer>
 
-        {/* Bunnlinje */}
-        <div className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-gray-600">
-          <span>
-            {safeLang === "no"
-              ? "Designet for en enkel, rask og tydelig trafikkskole-side."
-              : "Designed for a simple, fast, and clear driving school website."}
-          </span>
+      {/* PRIVACY POPUP */}
+      {privacyOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          {/* Overlay */}
+          <button
+            aria-label="Close privacy popup"
+            onClick={() => setPrivacyOpen(false)}
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+          />
 
-          {/* Credit (valgfri) */}
-          {footer.credit?.href && footer.credit?.label && (
-            <a
-              href={footer.credit.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-900 underline underline-offset-4"
-            >
-              {footer.credit.label}
-            </a>
-          )}
+          {/* Modal */}
+          <div className="relative z-10 w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 max-h-[85vh] overflow-y-auto">
+            <div className="flex justify-between items-start mb-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                {privacyTitle}
+              </h2>
+
+              <button
+                type="button"
+                onClick={() => setPrivacyOpen(false)}
+                className="text-gray-400 hover:text-black text-xl"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+              {privacyParagraphs.length > 0 ? (
+                privacyParagraphs.map((p, idx) => <p key={idx}>{p}</p>)
+              ) : (
+                <p className="text-gray-600">
+                  {safeLang === "no"
+                    ? "Personvern-tekst mangler i siteConfig.footer.privacy.paragraphs."
+                    : "Privacy text is missing in siteConfig.footer.privacy.paragraphs."}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
+      )}
+    </>
   );
 }
