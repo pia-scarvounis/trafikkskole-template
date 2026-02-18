@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
+import BrandMark from "@/components/ui/BrandMark";
 
 export default function Footer() {
   if (!siteConfig.features.footer) return null;
@@ -13,7 +14,6 @@ export default function Footer() {
 
   const [privacyOpen, setPrivacyOpen] = useState(false);
 
-  // ESC + scroll-lock når popup er åpen
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setPrivacyOpen(false);
@@ -30,7 +30,6 @@ export default function Footer() {
     };
   }, [privacyOpen]);
 
-  // Safety: hvis config mangler privacy-innhold, ikke krasj
   const privacyTitle =
     footer.privacy?.title?.[safeLang] ??
     (safeLang === "no" ? "Personvernerklæring" : "Privacy policy");
@@ -41,13 +40,10 @@ export default function Footer() {
     <>
       <footer className="relative bg-gradient-to-b from-white to-[#EEF2F2] border-t border-black/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
-          {/* MAIN GRID */}
           <div className="grid gap-10 sm:grid-cols-3">
             {/* COLUMN 1 – Brand */}
             <div className="space-y-4">
-              <div className="text-lg font-semibold text-gray-900">
-                {brand.name}
-              </div>
+              <BrandMark href="#top" size="sm" />
 
               <p className="text-sm text-gray-600 leading-relaxed max-w-xs">
                 {safeLang === "no"
@@ -72,7 +68,6 @@ export default function Footer() {
 
                 <span>{brand.location}</span>
 
-                {/* Personvern → popup (ikke link) */}
                 <button
                   type="button"
                   onClick={() => setPrivacyOpen(true)}
@@ -99,7 +94,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* DIVIDER */}
           <div className="mt-12 border-t border-black/5 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-gray-500 gap-3">
             <span>
               © {new Date().getFullYear()} {brand.name}
@@ -119,17 +113,14 @@ export default function Footer() {
         </div>
       </footer>
 
-      {/* PRIVACY POPUP */}
       {privacyOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-          {/* Overlay */}
           <button
             aria-label="Close privacy popup"
             onClick={() => setPrivacyOpen(false)}
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
           />
 
-          {/* Modal */}
           <div className="relative z-10 w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 max-h-[85vh] overflow-y-auto">
             <div className="flex justify-between items-start mb-6">
               <h2 className="text-xl font-semibold text-gray-900">

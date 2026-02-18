@@ -223,6 +223,13 @@ export type SiteConfig = {
 
     // NYTT 
     address?: LocalizedText;
+    
+
+    logo: {
+      src: string;
+      alt: LocalizedText;
+    };
+
 
     // NYTT 
     maps?: {
@@ -292,6 +299,11 @@ export const siteConfig: SiteConfig = {
     phone: "99 99 99 99",
     email: "post@trafikkskole.no",
     location: "Oslo",
+
+      logo: {
+    src: "/icons/din-skole-logo.svg",
+    alt: { no: "Din skole logo", en: "Your school logo" },
+  },
 
     address: {
       no: "Karl Johans gate 1, 0154 Oslo",

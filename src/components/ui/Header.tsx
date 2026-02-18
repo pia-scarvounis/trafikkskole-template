@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
-import { siteConfig } from "@/data/siteConfig";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
+import BrandMark from "@/components/ui/BrandMark";
+import { siteConfig } from "@/data/siteConfig";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -27,19 +27,8 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-4 py-3">
           {/* Rounded container */}
           <div className="flex items-center h-16 rounded-full bg-white border border-black/5 shadow-sm px-4 sm:px-6">
-            
-            {/* LOGO (kun logo, ingen dobbel tekst) */}
-            <a href="#top" className="flex items-center whitespace-nowrap">
-              <div className="relative h-10 w-[150px] sm:w-[170px]">
-                <Image
-                  src="/icons/din-skole-logo.svg"
-                  alt={siteConfig.brand.name}
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </a>
+            {/* LOGO */}
+            <BrandMark href="#top" size="md" />
 
             {/* DESKTOP NAV */}
             <nav className="hidden lg:flex flex-1 justify-center gap-8">
@@ -56,7 +45,6 @@ export default function Header() {
 
             {/* RIGHT SIDE */}
             <div className="ml-auto flex items-center gap-4">
-
               {/* Language toggle (desktop) */}
               <div className="hidden lg:block">
                 <LanguageToggle />
@@ -86,27 +74,19 @@ export default function Header() {
       {/* MOBILE MENU */}
       {open && (
         <div className="fixed inset-0 z-50">
-          
           {/* Overlay */}
           <button
             type="button"
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-black/50 backdrop-blur-[2px]"
+            aria-label="Close menu overlay"
           />
 
           {/* Slide panel */}
           <div className="absolute right-0 top-0 h-full w-[88%] max-w-sm bg-white shadow-2xl p-6 border-l border-black/10">
-            
             {/* Logo + close */}
             <div className="flex items-center justify-between mb-6">
-              <div className="relative h-10 w-[160px]">
-                <Image
-                  src="/icons/din-skole-logo.svg"
-                  alt={siteConfig.brand.name}
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <BrandMark href="#top" size="md" />
 
               <button
                 type="button"
@@ -123,14 +103,13 @@ export default function Header() {
             </div>
 
             {/* Contact button mobile */}
-        {/* Contact button mobile */}
-<a
-  href="#kontakt"
-  onClick={() => setOpen(false)}
-  className="mb-5 inline-flex w-full items-center justify-start rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition"
->
-  {t.contact}
-</a>
+            <a
+              href="#kontakt"
+              onClick={() => setOpen(false)}
+              className="mb-5 inline-flex w-full items-center justify-start rounded-full bg-[var(--brand)] px-5 py-3 text-sm font-medium text-white hover:opacity-90 transition"
+            >
+              {t.contact}
+            </a>
 
             {/* Nav links mobile */}
             <nav className="flex flex-col gap-3">
