@@ -19,18 +19,13 @@ export default function Hero() {
         overflow-hidden
         bg-[var(--section-odd)]
 
-        /* Mobil: mindre topp og mindre bunn */
         pt-10 pb-8
-
-        /* Desktop beholdes */
         sm:pt-20 sm:pb-24
         lg:pt-32
 
-        /* Mobil: start høyere */
         flex items-start
         sm:items-center
 
-        /* Mobil litt mindre enn full høyde */
         min-h-[90svh] sm:min-h-screen
       "
     >
@@ -59,9 +54,7 @@ export default function Hero() {
               </h1>
             </Reveal>
 
-            <p className="mt-4 text-lg text-gray-700">
-              {hero.subtext[lang]}
-            </p>
+            <p className="mt-4 text-lg text-gray-700">{hero.subtext[lang]}</p>
 
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -77,7 +70,7 @@ export default function Hero() {
               >
                 {hero.secondaryCta.label[lang]}
               </a>
-            </d
+            </div>
           </div>
         </div>
       </div>
