@@ -14,6 +14,7 @@ export default function LicenseClasses() {
 
   const section = siteConfig.licenseClassesSection;
   const classes = siteConfig.licenseClasses?.[safeLang] ?? [];
+
   if (classes.length === 0) return null;
 
   const iconMap: Record<string, string> = {
@@ -40,69 +41,63 @@ export default function LicenseClasses() {
   };
 
   return (
-    <Section
-      id="forerkortklasser"
-      variant="odd"
-      topDiagonal={true}
-      bottomDiagonal={true}
-      topDiagonalDirection="ltr"
-      bottomDiagonalDirection="ltr"
-      topDiagonalBgVariant="even"
-      bottomDiagonalBgVariant="even"
-    >
-      {/* Header */}
-      <div>
+    <Section id="forerkortklasser" variant="odd">
+      <div className="max-w-6xl mx-auto">
+        {/* Heading */}
         <Reveal variant="heading">
           <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
             {section?.heading?.[safeLang]}
           </h2>
         </Reveal>
 
+        {/* Subtext */}
         {section?.subtext?.[safeLang] && (
           <p className="mt-4 max-w-2xl text-sm text-gray-600 sm:text-base">
             {section.subtext[safeLang]}
           </p>
         )}
-      </div>
 
-      {/* Grid */}
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {classes.map((item) => {
-          const primaryCode = getPrimaryCode(item.code);
-          const iconSrc = getIconSrc(item);
+        {/* Grid */}
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {classes.map((item) => {
+            const primaryCode = getPrimaryCode(item.code);
+            const iconSrc = getIconSrc(item);
 
-          return (
-            <div
-              key={item.code}
-              className="flex items-center gap-4 rounded-2xl bg-white p-6 transition hover:shadow-sm border border-black/5"
-            >
-              {/* Icon */}
-              <div className="flex items-center justify-center rounded-full bg-[var(--brand)] h-[calc(var(--spacing)*18)] w-[calc(var(--spacing)*18)]">
-                {iconSrc ? (
-                  <Image
-                    src={iconSrc}
-                    alt={item.title}
-                    width={40}
-                    height={40}
-                    className="object-contain h-[calc(var(--spacing)*10)] w-[calc(var(--spacing)*10)]"
-                  />
-                ) : (
-                  <span className="text-white font-semibold text-xs truncate max-w-[42px]">
-                    {primaryCode}
-                  </span>
-                )}
+            return (
+              <div
+                key={item.code}
+                className="flex items-center gap-4 rounded-2xl bg-white p-6 border border-black/5 hover:shadow-sm transition"
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-center rounded-full bg-[var(--brand)] h-[72px] w-[72px]">
+                  {iconSrc ? (
+                    <Image
+                      src={iconSrc}
+                      alt={item.title}
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
+                  ) : (
+                    <span className="text-white font-semibold text-xs truncate max-w-[42px]">
+                      {primaryCode}
+                    </span>
+                  )}
+                </div>
+
+                {/* Text */}
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-600 break-words">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-
-              {/* Text */}
-              <div className="min-w-0">
-                <h3 className="font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-1 text-sm text-gray-600 break-words">
-                  {item.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </Section>
   );

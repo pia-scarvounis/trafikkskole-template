@@ -54,7 +54,13 @@ export default function Section({
   className = "",
   variant = "odd",
 
-  paddingClassName = "py-40 sm:py-48 lg:py-56",
+  /**
+   * Baseline spacing:
+   * - Mobil: stramt (det du ønsket)
+   * - Desktop: som før (luftig)
+   */
+  paddingClassName = "pt-16 pb-12 sm:pt-20 sm:pb-20 lg:py-56"
+,
 
   topDiagonal = false,
   bottomDiagonal = false,
@@ -68,12 +74,8 @@ export default function Section({
   const topBg = bgClass(topDiagonalBgVariant ?? variant);
   const bottomBg = bgClass(bottomDiagonalBgVariant ?? variant);
 
-  // Diagonalhøyde
-  const DIAGONAL_H = "h-20 sm:h-24 lg:h-28";
-
-  // Gir faktisk plass i layouten når vi tegner diagonaler utenfor seksjonen
-  const DIAGONAL_SPACE_TOP = topDiagonal ? "mt-20 sm:mt-24 lg:mt-28" : "";
-  const DIAGONAL_SPACE_BOTTOM = bottomDiagonal ? "mb-20 sm:mb-24 lg:mb-28" : "";
+  // Diagonalhøyde (kun visuelt – ingen margin “space hacks”)
+  const DIAGONAL_H = "h-10 sm:h-20 lg:h-28";
 
   return (
     <section
@@ -83,8 +85,6 @@ export default function Section({
         "overflow-visible",
         bgClass(variant),
         paddingClassName,
-        DIAGONAL_SPACE_TOP,
-        DIAGONAL_SPACE_BOTTOM,
         className,
       ].join(" ")}
     >
@@ -96,10 +96,7 @@ export default function Section({
             "pointer-events-none absolute inset-x-0 top-0",
             DIAGONAL_H,
             topBg,
-
-            //  Ligger alltid bak alt innhold + modaler
             "z-0",
-
             diagonalClip("top", topDiagonalDirection),
             "translate-y-[-100%]",
           ].join(" ")}
@@ -119,10 +116,7 @@ export default function Section({
             "pointer-events-none absolute inset-x-0 bottom-0",
             DIAGONAL_H,
             bottomBg,
-
-            //  Ligger alltid bak alt innhold + modaler
             "z-0",
-
             diagonalClip("bottom", bottomDiagonalDirection),
             "translate-y-[100%]",
           ].join(" ")}
