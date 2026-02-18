@@ -66,7 +66,7 @@ export default function Hero() {
               >
                 {hero.secondaryCta.label[lang]}
               </a>
-            </div>
+            </d
           </div>
         </div>
       </div>
