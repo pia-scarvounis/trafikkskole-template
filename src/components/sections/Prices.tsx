@@ -13,12 +13,9 @@ export default function Prices() {
   const { lang } = useLanguage();
   const safeLang: "no" | "en" = lang === "en" ? "en" : "no";
 
-  // Portal mount (for å unngå SSR-feil)
   const [mounted, setMounted] = useState(false);
-
-  // Modal state (premium open/close animasjon)
-  const [isModalOpen, setIsModalOpen] = useState(false); // mount/unmount
-  const [modalVisible, setModalVisible] = useState(false); // animasjon
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const prices = siteConfig.prices ?? [];
   const visiblePrices = prices.slice(0, 3);
@@ -33,7 +30,6 @@ export default function Prices() {
       ? "Oversikt over våre mest brukte tjenester og kurs."
       : "An overview of our most common services and courses.");
 
-  // Vi bruker bare label fra config til knappen, men åpner modal (one-page)
   const fullCta =
     siteConfig.features.fullPriceListCta
       ? siteConfig.pricesSection?.fullPriceListCta
@@ -58,7 +54,6 @@ export default function Prices() {
     window.setTimeout(() => setIsModalOpen(false), 160);
   }
 
-  // ESC for å lukke modal
   useEffect(() => {
     if (!isModalOpen) return;
 
@@ -68,10 +63,8 @@ export default function Prices() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen]);
 
-  // Lås scrolling i bakgrunnen når modal er åpen
   useEffect(() => {
     if (!isModalOpen) return;
     const prev = document.body.style.overflow;
@@ -85,10 +78,9 @@ export default function Prices() {
     mounted && isModalOpen
       ? createPortal(
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-            {/* Overlay (klikk utenfor = lukk) */}
+            {/* Overlay */}
             <button
               type="button"
-              aria-label={safeLang === "no" ? "Lukk" : "Close"}
               onClick={closeModal}
               className={[
                 "absolute inset-0 bg-black/60 transition-opacity duration-150",
@@ -120,13 +112,12 @@ export default function Prices() {
                   type="button"
                   onClick={closeModal}
                   className="h-10 w-10 rounded-full border border-black/10 flex items-center justify-center hover:bg-[var(--surface)] transition"
-                  aria-label={safeLang === "no" ? "Lukk" : "Close"}
                 >
                   <span className="text-xl leading-none text-gray-700">×</span>
                 </button>
               </div>
 
-              {/* Body (scroll) */}
+              {/* Body */}
               <div className="max-h-[70vh] overflow-auto px-6 sm:px-8 py-6">
                 <ul className="divide-y">
                   {prices.map((item, index) => (
@@ -169,26 +160,18 @@ export default function Prices() {
 
   return (
     <>
-      <Section id="priser" variant="even" className="relative overflow-hidden">
-        {/* Diagonal topp */}
-        <div
-          aria-hidden
-          className="absolute inset-x-0 -top-16 h-24 bg-[var(--section-even)] skew-y-2 origin-top-left z-0"
-        />
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          
-
+      <Section id="priser" variant="even">
+        <div className="max-w-4xl mx-auto text-center">
           <Reveal variant="heading">
-            <h2 className="mt-2 text-3xl font-semibold text-gray-900">
+            <h2 className="text-3xl font-semibold text-gray-900">
               {heading}
             </h2>
           </Reveal>
 
           <p className="mt-4 text-gray-600">{subtext}</p>
 
-          {/* Pris-boks (viser alltid kun 3 linjer) */}
-          <div className="mt-12 mb-12 rounded-2xl bg-white p-6 sm:p-8 text-left border border-black/5">
+          {/* Pris-boks */}
+          <div className="mt-8 rounded-2xl bg-white p-6 sm:p-8 text-left border border-black/5">
             <ul>
               {visiblePrices.map((item, index) => (
                 <li
@@ -213,7 +196,6 @@ export default function Prices() {
               ))}
             </ul>
 
-            {/* Full prisliste -> åpner premium modal (one-page) */}
             {fullCta?.label && prices.length > 0 && (
               <div className="mt-4">
                 <button
@@ -221,24 +203,14 @@ export default function Prices() {
                   onClick={openModal}
                   className="text-sm underline text-[var(--brand)]"
                 >
-                  {fullCta.label[safeLang] ??
-                    (safeLang === "no"
-                      ? "Se full prisliste"
-                      : "See full price list")}
+                  {fullCta.label[safeLang]}
                 </button>
               </div>
             )}
           </div>
         </div>
-
-        {/* Diagonal bunn */}
-        <div
-          aria-hidden
-          className="absolute inset-x-0 -bottom-16 h-24 bg-[var(--section-even)] skew-y-2 origin-bottom-right z-0"
-        />
       </Section>
 
-      {/* Modal rendres i document.body via portal */}
       {modal}
     </>
   );

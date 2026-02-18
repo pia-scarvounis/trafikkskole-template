@@ -16,20 +16,30 @@ export default function Hero() {
       id="hero"
       className="
         relative
-        min-h-screen
-        flex items-center
         overflow-hidden
-        pt-16 sm:pt-20 lg:pt-32
-        pb-24
         bg-[var(--section-odd)]
+
+        /* Mobil: mindre topp og mindre bunn */
+        pt-10 pb-8
+
+        /* Desktop beholdes */
+        sm:pt-20 sm:pb-24
+        lg:pt-32
+
+        /* Mobil: start høyere */
+        flex items-start
+        sm:items-center
+
+        /* Mobil litt mindre enn full høyde */
+        min-h-[90svh] sm:min-h-screen
       "
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          {/* IMAGE FIRST on mobile, SECOND on desktop */}
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:items-center">
+          {/* IMAGE FIRST on mobile */}
           {hero.image && (
             <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-              <div className="relative w-full max-w-[520px] h-[260px] sm:h-[320px] lg:h-[500px] overflow-hidden rounded-xl hero-image-enter">
+              <div className="relative w-full max-w-[520px] h-[240px] sm:h-[320px] lg:h-[500px] overflow-hidden rounded-xl hero-image-enter">
                 <Image
                   src={hero.image.src}
                   alt={hero.image.alt}
@@ -41,7 +51,7 @@ export default function Hero() {
             </div>
           )}
 
-          {/* TEXT SECOND on mobile, FIRST on desktop */}
+          {/* TEXT */}
           <div className="order-2 lg:order-1">
             <Reveal variant="heading" rootMargin="0px 0px 0px 0px" delayMs={80}>
               <h1 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
@@ -49,10 +59,11 @@ export default function Hero() {
               </h1>
             </Reveal>
 
-            {/* Subtext er uendret (ingen reveal) */}
-            <p className="mt-4 text-lg text-gray-700">{hero.subtext[lang]}</p>
+            <p className="mt-4 text-lg text-gray-700">
+              {hero.subtext[lang]}
+            </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href={hero.primaryCta.href}
                 className="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-medium text-white hover:opacity-90"
@@ -71,11 +82,12 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Fade til neste seksjon */}
+      {/* Fade overgang – mindre på mobil */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--section-even)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-28 bg-gradient-to-b from-transparent to-[var(--section-even)]"
       />
     </section>
   );
 }
+
