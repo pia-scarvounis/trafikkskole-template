@@ -11,8 +11,15 @@ type Props = {
   className?: string;
 
   variant?: SectionVariant;
+
+  /**
+   * Global spacing for alle seksjoner.
+   * - Mobil: litt stramt
+   * - Tablet/desktop: luftig
+   */
   paddingClassName?: string;
 
+  // Clip-path diagonaler
   topDiagonal?: boolean;
   bottomDiagonal?: boolean;
 
@@ -43,6 +50,7 @@ function diagonalClip(kind: "top" | "bottom", dir: DiagonalDirection) {
       ? "[clip-path:polygon(0_0,100%_0,100%_100%,0_55%)]"
       : "[clip-path:polygon(0_0,100%_0,100%_55%,0_100%)]";
   }
+
   return dir === "ltr"
     ? "[clip-path:polygon(0_0,100%_55%,100%_100%,0_100%)]"
     : "[clip-path:polygon(0_55%,100%_0,100%_100%,0_100%)]";
@@ -54,13 +62,8 @@ export default function Section({
   className = "",
   variant = "odd",
 
-  /**
-   * Baseline spacing:
-   * - Mobil: stramt (det du ønsket)
-   * - Desktop: som før (luftig)
-   */
-  paddingClassName = "pt-16 pb-12 sm:pt-20 sm:pb-20 lg:py-56"
-,
+  // Dette er “one knob” du kan justere for ALLE seksjoner:
+  paddingClassName = "pt-14 pb-14 sm:pt-20 sm:pb-20 lg:py-56",
 
   topDiagonal = false,
   bottomDiagonal = false,
@@ -74,8 +77,19 @@ export default function Section({
   const topBg = bgClass(topDiagonalBgVariant ?? variant);
   const bottomBg = bgClass(bottomDiagonalBgVariant ?? variant);
 
-  // Diagonalhøyde (kun visuelt – ingen margin “space hacks”)
+  // Diagonal høyde
   const DIAGONAL_H = "h-10 sm:h-20 lg:h-28";
+
+  /**
+   * NØKKEL:
+   * Diagonalene ligger utenfor seksjonen (translate -100% / +100%).
+   * Derfor må seksjonen få “plass” utenfor, ellers vil neste seksjon dekke dem.
+   *
+   * Mobil: vi holder det stramt (mindre margin).
+   * Desktop: større margin for pen overgang.
+   */
+  const DIAGONAL_SPACE_TOP = topDiagonal ? "mt-8 sm:mt-20 lg:mt-28" : "";
+  const DIAGONAL_SPACE_BOTTOM = bottomDiagonal ? "mb-8 sm:mb-20 lg:mb-28" : "";
 
   return (
     <section
@@ -85,10 +99,12 @@ export default function Section({
         "overflow-visible",
         bgClass(variant),
         paddingClassName,
+        DIAGONAL_SPACE_TOP,
+        DIAGONAL_SPACE_BOTTOM,
         className,
       ].join(" ")}
     >
-      {/* TOP diagonal (over seksjonen) */}
+      {/* TOP diagonal */}
       {topDiagonal && (
         <div
           aria-hidden
@@ -108,7 +124,7 @@ export default function Section({
         {children}
       </div>
 
-      {/* BOTTOM diagonal (under seksjonen) */}
+      {/* BOTTOM diagonal */}
       {bottomDiagonal && (
         <div
           aria-hidden

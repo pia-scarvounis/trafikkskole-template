@@ -26,7 +26,8 @@ export default function Hero() {
         flex items-start
         sm:items-center
 
-        min-h-[90svh] sm:min-h-screen
+        min-h-0 sm:min-h-screen
+
       "
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -76,10 +77,11 @@ export default function Hero() {
       </div>
 
       {/* Fade overgang – mindre på mobil */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-28 bg-gradient-to-b from-transparent to-[var(--section-even)]"
-      />
+    <div
+  aria-hidden
+  className="hidden sm:block pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[var(--section-even)]"
+/>
+
     </section>
   );
 }

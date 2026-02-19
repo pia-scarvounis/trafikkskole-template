@@ -160,12 +160,11 @@ export default function Prices() {
 
   return (
     <>
-      <Section id="priser" variant="even">
+    <Section id="priser" variant="even">
+
         <div className="max-w-4xl mx-auto text-center">
           <Reveal variant="heading">
-            <h2 className="text-3xl font-semibold text-gray-900">
-              {heading}
-            </h2>
+            <h2 className="text-3xl font-semibold text-gray-900">{heading}</h2>
           </Reveal>
 
           <p className="mt-4 text-gray-600">{subtext}</p>
